@@ -13,10 +13,12 @@
 function Invoke-TervisChocolateyPackPackage {
     param (
         $PowerShellModulesPath = ($ENV:PSModulepath -split ";")[0],
-        $PackageName
+        $PackageName,
+        [Switch]$Force
     )
+
     #&choco.exe pack $PowerShellModulesPath\chocolateyautomaticpackages\Static\$PackageName\$PackageName.nuspec --outputdirectory "\\tervis.prv\applications\Chocolatey"
-    choco pack $PowerShellModulesPath\chocolateyautomaticpackages\Static\$PackageName\$PackageName.nuspec --outputdirectory "\\tervis.prv\applications\Chocolatey"
+    choco pack $PowerShellModulesPath\chocolateyautomaticpackages\Static\$PackageName\$PackageName.nuspec --outputdirectory "\\tervis.prv\applications\Chocolatey" $(if($Force){"--force"})
 }
 
 #New-TervisChocolateyPackage -PackageName iVMS-4200 -URL "http://oversea-download.hikvision.com/uploadfile/USA/Software/iVMS-4200v2.5.0.5Download_Package_contains_Lite_&_Full_versions.zip"
@@ -27,4 +29,12 @@ function Install-TervisChocolateyPackageInstall {
     )
 
     choco install $PackageName --source="\\tervis.prv\applications\Chocolatey" -y --allowemptychecksum
+}
+
+function Uninstall-TervisChocolateyPackageInstall {
+    param (
+        [Parameter(Mandatory)]$PackageName
+    )
+    
+    choco uninstall $PackageName -y
 }
