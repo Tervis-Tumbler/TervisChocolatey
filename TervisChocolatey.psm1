@@ -17,24 +17,26 @@ function Invoke-TervisChocolateyPackPackage {
         [Switch]$Force
     )
 
-    #&choco.exe pack $PowerShellModulesPath\chocolateyautomaticpackages\Static\$PackageName\$PackageName.nuspec --outputdirectory "\\tervis.prv\applications\Chocolatey"
-    choco pack $PowerShellModulesPath\chocolateyautomaticpackages\Static\$PackageName\$PackageName.nuspec --outputdirectory "\\tervis.prv\applications\Chocolatey" $(if($Force){"--force"})
+    #&choco.exe pack $PowerShellModulesPath\chocolateyautomaticpackages\Static\$PackageName\$PackageName.nuspec --outputdirectory "\\$env:USERDNSDOMAIN\applications\Chocolatey"
+    choco pack $PowerShellModulesPath\chocolateyautomaticpackages\Static\$PackageName\$PackageName.nuspec --outputdirectory "\\$env:USERDNSDOMAIN\applications\Chocolatey" $(if($Force){"--force"})
 }
 
-#New-TervisChocolateyPackage -PackageName iVMS-4200 -URL "http://oversea-download.hikvision.com/uploadfile/USA/Software/iVMS-4200v2.5.0.5Download_Package_contains_Lite_&_Full_versions.zip"
+#New-TervisChocolateyPackage -PackageName iVMS-4200 -URL "http://oversea-download.hikvision.com/uploadfile/USA/Software/iVMS-4200v2.5.0.5Download_Package_contains_Lite_&_Full_versions.zip" -Version "2.5.0.5" -PowerShellModulesPath C:\test
 
 function Install-TervisChocolateyPackageInstall {
     param (
-        [Parameter(Mandatory)]$PackageName
+        [Parameter(Mandatory)]$PackageName,
+        [Switch]$Force
     )
 
-    choco install $PackageName --source="\\tervis.prv\applications\Chocolatey" -y --allowemptychecksum
+    choco install $PackageName --source="\\$env:USERDNSDOMAIN\applications\Chocolatey" -y --allowemptychecksum $(if($Force){"--force"})
 }
 
 function Uninstall-TervisChocolateyPackageInstall {
     param (
-        [Parameter(Mandatory)]$PackageName
+        [Parameter(Mandatory)]$PackageName,
+        [Switch]$Force
     )
     
-    choco uninstall $PackageName -y
+    choco uninstall $PackageName -y $(if($Force){"--force"})
 }
