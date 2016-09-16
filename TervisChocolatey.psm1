@@ -2,8 +2,8 @@
     param (
         $PowerShellModulesPath = ($ENV:PSModulepath -split ";")[0],
         [Parameter(Mandatory)]$PackageName,
-        [Parameter(Mandatory)]$URL,
-        [Parameter(Mandatory)]$Version
+        [Parameter(Mandatory)]$Version,
+        $URL
     )
 
     choco new $PackageName --outputdirectory "$PowerShellModulesPath\chocolateyautomaticpackages\Static" maintainername="TervisIT" maintainerrepo="https://github.com/Tervis-Tumbler/chocolateyautomaticpackages/tree/master/Static/$PackageName" url="$URL" packageversion="$Version"
