@@ -17,8 +17,20 @@ function Invoke-TervisChocolateyPackPackage {
         [Switch]$Force
     )
 
+    $PackageDirectory = "$PowerShellModulesPath\chocolateyautomaticpackages\Static\$PackageName\tools"
+
+    
+    
+    }
+
     #&choco.exe pack $PowerShellModulesPath\chocolateyautomaticpackages\Static\$PackageName\$PackageName.nuspec --outputdirectory "\\$env:USERDNSDOMAIN\applications\Chocolatey"
+    
     choco pack $PowerShellModulesPath\chocolateyautomaticpackages\Static\$PackageName\$PackageName.nuspec --outputdirectory "\\$env:USERDNSDOMAIN\applications\Chocolatey" $(if($Force){"--force"})
+
+
+    
+    }
+
 }
 
 #New-TervisChocolateyPackage -PackageName iVMS-4200 -URL "http://oversea-download.hikvision.com/uploadfile/USA/Software/iVMS-4200v2.5.0.5Download_Package_contains_Lite_&_Full_versions.zip" -Version "2.5.0.5" -PowerShellModulesPath C:\test
