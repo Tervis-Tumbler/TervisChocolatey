@@ -1,4 +1,6 @@
-﻿function New-TervisChocolateyPackage {
+﻿#Requires -modules WebServicesPowerShellProxyBuilder
+
+function New-TervisChocolateyPackage {
     param (
         $PowerShellModulesPath = ($ENV:PSModulepath -split ";")[0],
         [Parameter(Mandatory)]$PackageName,
@@ -7,7 +9,6 @@
     )
 
     choco new $PackageName --outputdirectory "$PowerShellModulesPath\chocolateyautomaticpackages\Static" maintainername="TervisIT" maintainerrepo="https://github.com/Tervis-Tumbler/chocolateyautomaticpackages/tree/master/Static/$PackageName" url="$URL" packageversion="$Version"
-    
 }
 
 function Invoke-TervisChocolateyPackPackage {
@@ -20,10 +21,8 @@ function Invoke-TervisChocolateyPackPackage {
 
     $PackageDirectory = "$PowerShellModulesPath\chocolateyautomaticpackages\Static\$PackageName\tools"
 
-    if ($InstallerToBeIncluded) {
-    
-       Copy-Item -Path $InstallerToBeIncluded -Destination $PackageDirectory
-    
+    if ($InstallerToBeIncluded) {    
+       Copy-Item -Path $InstallerToBeIncluded -Destination $PackageDirectory    
     }
 
     #&choco.exe pack $PowerShellModulesPath\chocolateyautomaticpackages\Static\$PackageName\$PackageName.nuspec --outputdirectory "\\$env:USERDNSDOMAIN\applications\Chocolatey"
@@ -31,11 +30,8 @@ function Invoke-TervisChocolateyPackPackage {
     choco pack $PowerShellModulesPath\chocolateyautomaticpackages\Static\$PackageName\$PackageName.nuspec --outputdirectory "\\$env:USERDNSDOMAIN\applications\Chocolatey" $(if($Force){"--force"})
 
     if ($InstallerToBeIncluded) {
-
         Remove-Item -Path (Join-Path -Path $PackageDirectory -ChildPath (Split-Path -Path $InstallerToBeIncluded -Leaf))
-    
     }
-
 }
 
 #New-TervisChocolateyPackage -PackageName iVMS-4200 -URL "http://oversea-download.hikvision.com/uploadfile/USA/Software/iVMS-4200v2.5.0.5Download_Package_contains_Lite_&_Full_versions.zip" -Version "2.5.0.5" -PowerShellModulesPath C:\test
@@ -56,4 +52,105 @@ function Uninstall-TervisChocolateyPackageInstall {
     )
     
     choco uninstall $PackageName -y $(if($Force){"--force"})
+}
+
+function New-TervisChocolateyPackageConfigPackage {
+    param (
+        [Parameter(Mandatory)]$id,
+        $version,
+        $source,
+        $installArguments,
+        $packageParameters,
+        [Switch]$forceX86,
+        [Switch]$allowMultipleVersions,
+        [Switch]$ignoreDependencies        
+    )
+    New-XMLElement -Name package -Attributes ($PSBoundParameters | ConvertFrom-PSBoundParameters)
+}
+
+function New-TervisChocolateyPackageConfig {
+    param (
+        $PackageConfigPackages
+    )
+    New-XMLDocument -Version "1.0" -Encoding "utf-8" -InnerElements (
+        New-XMLElement -Name packages -InnerElements (
+            $PackageConfigPackages
+        )
+    ) 
+}
+
+function Install-TervisChocolatey {
+    [CmdletBinding()]
+    param (
+        $ComputerName,
+        $Credential = [System.Management.Automation.PSCredential]::Empty
+    )
+    Write-Verbose "Installing Chocolatey"
+    Invoke-Command -ComputerName $ComputerName -Credential $Credential -ScriptBlock {
+        iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex
+        refreshenv
+        choco feature enable -n allowEmptyChecksums
+        choco source add -n=Tervis -s"\\$env:USERDNSDOMAIN\applications\chocolatey\"
+        choco source list
+    }
+}
+
+function Install-TervisChocolateyPackages {
+    [CmdletBinding()]
+    param (
+        $ComputerName,
+        $Credential = [System.Management.Automation.PSCredential]::Empty,
+        $ChocolateyPackageGroupNames
+    )
+    $ChocolateyPackageGroups = $ChocolateyPackageGroupNames | Get-ChocolateyPackageGroup
+    
+    $ChocolateyPackagesIncludedMoreThanOnce = $ChocolateyPackageGroups.ChocolateyPackageConfigPackages | 
+        group id | 
+        where count -GT 1 | 
+        select -ExpandProperty group
+
+    if ($ChocolateyPackagesIncludedMoreThanOnce) {        
+        Throw "There are chocolatey packages included more than once: $ChocolateyPackagesIncludedMoreThanOnce"
+    }
+
+    $ChocolateyPackageConfig = New-TervisChocolateyPackageConfig -PackageConfigPackages $ChocolateyPackageGroups.ChocolateyPackageConfigPackages
+
+    Invoke-Command -ComputerName $ComputerName -Credential $Credential -ArgumentList $ChocolateyPackageConfig.OuterXml -ScriptBlock {
+        param (
+            $PackagConfigFileContent
+        )
+        $PackageConfigFile = "$env:USERPROFILE\PackageConfigFile.config"
+        $PackagConfigFileContent | out-file $PackageConfigFile
+
+        choco install $PackageConfigFile -y
+    }
+}
+
+$ChocolateyPackageGroups = [PSCustomObject][Ordered] @{
+    Name = "StandardOfficeEndpoint"
+    ChocolateyPackageConfigPackages = @(
+        (New-TervisChocolateyPackageConfigPackage -id CiscoJabber),
+        (New-TervisChocolateyPackageConfigPackage -id googlechrome),
+        (New-TervisChocolateyPackageConfigPackage -id firefox),
+        (New-TervisChocolateyPackageConfigPackage -id autohotkey),
+        (New-TervisChocolateyPackageConfigPackage -id jre8 -packageParameters "/exclude:64"),
+        (New-TervisChocolateyPackageConfigPackage -id greenshot),
+        (New-TervisChocolateyPackageConfigPackage -id office365-2016-deployment-tool),
+        (New-TervisChocolateyPackageConfigPackage -id adobereader)
+    )
+},
+[PSCustomObject][Ordered] @{
+    Name = "ContactCenter"
+    ChocolateyPackageConfigPackages = @(
+        (New-TervisChocolateyPackageConfigPackage -id CiscoAgentDesktop)
+    )
+}
+
+function Get-ChocolateyPackageGroup {
+    param (
+        [Parameter(Mandatory,ValueFromPipeline)]$Name
+    )
+    process {
+        $ChocolateyPackageGroups | where Name -eq $Name
+    }
 }
