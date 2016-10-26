@@ -56,7 +56,7 @@ function Uninstall-TervisChocolateyPackageInstall {
 
 function New-TervisChocolateyPackageConfigPackage {
     param (
-        [Parameter(Mandatory)]$id,
+        [Parameter(Mandatory, ValueFromPipeline)]$id,
         $version,
         $source,
         $installArguments,
@@ -65,7 +65,9 @@ function New-TervisChocolateyPackageConfigPackage {
         [Switch]$allowMultipleVersions,
         [Switch]$ignoreDependencies        
     )
-    New-XMLElement -Name package -Attributes ($PSBoundParameters | ConvertFrom-PSBoundParameters)
+    process {
+        New-XMLElement -Name package -Attributes ($PSBoundParameters | ConvertFrom-PSBoundParameters)
+    }
 }
 
 function New-TervisChocolateyPackageConfig {
@@ -129,14 +131,11 @@ function Install-TervisChocolateyPackages {
 $ChocolateyPackageGroups = [PSCustomObject][Ordered] @{
     Name = "StandardOfficeEndpoint"
     ChocolateyPackageConfigPackages = @(
-        (New-TervisChocolateyPackageConfigPackage -id CiscoJabber),
-        (New-TervisChocolateyPackageConfigPackage -id googlechrome),
-        (New-TervisChocolateyPackageConfigPackage -id firefox),
-        (New-TervisChocolateyPackageConfigPackage -id autohotkey),
-        (New-TervisChocolateyPackageConfigPackage -id jre8 -packageParameters "/exclude:64"),
-        (New-TervisChocolateyPackageConfigPackage -id greenshot),
-        (New-TervisChocolateyPackageConfigPackage -id office365-2016-deployment-tool),
-        (New-TervisChocolateyPackageConfigPackage -id adobereader)
+        (
+            "CiscoJabber","googlechrome","firefox","autohotkey","greenshot","office365-2016-deployment-tool","adobereader" | 
+            New-TervisChocolateyPackageConfigPackage
+        ),
+        (New-TervisChocolateyPackageConfigPackage -id jre8 -packageParameters "/exclude:64")
     )
 },
 [PSCustomObject][Ordered] @{
