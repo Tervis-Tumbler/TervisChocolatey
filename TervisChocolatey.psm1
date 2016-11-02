@@ -92,7 +92,7 @@ function Install-TervisChocolatey {
         iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
         refreshenv
         choco feature enable -n allowEmptyChecksums
-        choco source add -n=Tervis -s"\\$env:USERDNSDOMAIN\applications\chocolatey\"
+        choco source add -n=Tervis -s "\\$env:USERDNSDOMAIN\applications\chocolatey\"
         choco source list
     }
 }
