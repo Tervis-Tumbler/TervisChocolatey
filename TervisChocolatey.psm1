@@ -134,7 +134,7 @@ $ChocolateyPackageGroups = [PSCustomObject][Ordered] @{
         (
             "CiscoJabber","googlechrome","firefox","autohotkey","greenshot","office365-2016-deployment-tool","adobereader" | 
             New-TervisChocolateyPackageConfigPackage
-        ),
+        ) +
         (New-TervisChocolateyPackageConfigPackage -id jre8 -packageParameters "/exclude:64")
     )
 },
