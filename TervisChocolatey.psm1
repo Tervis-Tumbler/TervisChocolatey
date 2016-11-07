@@ -143,6 +143,15 @@ $ChocolateyPackageGroups = [PSCustomObject][Ordered] @{
     ChocolateyPackageConfigPackages = @(
         (New-TervisChocolateyPackageConfigPackage -id CiscoAgentDesktop)
     )
+},
+[PSCustomObject][Ordered] @{
+    Name = "IT"
+    ChocolateyPackageConfigPackages = @(
+        (
+            "putty","notepadplusplus","rufus","7zip","vlc","sysinternals","skype","filezilla","autohotkey","wireshark","evernote","fiddler4","nmap","everything","pester","rdm","windirstat","speedcrunch","gimp","git","todoist" | 
+            New-TervisChocolateyPackageConfigPackage
+        )
+    )
 }
 
 function Get-ChocolateyPackageGroup {
