@@ -148,7 +148,7 @@ $ChocolateyPackageGroups = [PSCustomObject][Ordered] @{
     Name = "IT"
     ChocolateyPackageConfigPackages = @(
         (
-            "putty","notepadplusplus","rufus","7zip","vlc","sysinternals","skype","filezilla","autohotkey","wireshark","evernote","fiddler4","nmap","everything","pester","rdm","windirstat","speedcrunch","gimp","git","todoist" | 
+            "putty","notepadplusplus","rufus","7zip","vlc","sysinternals","skype","filezilla","wireshark","evernote","fiddler4","nmap","everything","pester","rdm","windirstat","speedcrunch","gimp","git","todoist" | 
             New-TervisChocolateyPackageConfigPackage
         )
     )
