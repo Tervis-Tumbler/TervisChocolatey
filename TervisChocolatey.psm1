@@ -132,7 +132,7 @@ $ChocolateyPackageGroups = [PSCustomObject][Ordered] @{
     Name = "StandardOfficeEndpoint"
     ChocolateyPackageConfigPackages = @(
         (
-            "CiscoJabber","googlechrome","firefox","autohotkey","greenshot","office365-2016-deployment-tool","adobereader" | 
+            "CiscoJabber","CiscoAnyConnect","googlechrome","firefox","autohotkey","greenshot","office365-2016-deployment-tool","adobereader" | 
             New-TervisChocolateyPackageConfigPackage
         ) +
         (New-TervisChocolateyPackageConfigPackage -id jre8 -packageParameters "/exclude:64")
