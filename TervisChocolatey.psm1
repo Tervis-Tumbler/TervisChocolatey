@@ -132,8 +132,17 @@ $ChocolateyPackageGroups = [PSCustomObject][Ordered] @{
     Name = "StandardOfficeEndpoint"
     ChocolateyPackageConfigPackages = @(
         (
-            "CiscoJabber","CiscoAnyConnect","googlechrome","firefox","autohotkey","greenshot","office365-2016-deployment-tool","adobereader" | 
-            New-TervisChocolateyPackageConfigPackage
+@"
+CiscoJabber
+CiscoAnyConnect
+camunda-modeler
+googlechrome
+firefox
+autohotkey
+greenshot
+office365-2016-deployment-tool
+adobereader
+"@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         ) +
         (New-TervisChocolateyPackageConfigPackage -id jre8 -packageParameters "/exclude:64")
     )
@@ -148,8 +157,59 @@ $ChocolateyPackageGroups = [PSCustomObject][Ordered] @{
     Name = "IT"
     ChocolateyPackageConfigPackages = @(
         (
-            "putty","notepadplusplus","rufus","7zip","vlc","sysinternals","skype","filezilla","wireshark","evernote","fiddler4","nmap","everything","pester","rdm","windirstat","speedcrunch","gimp","git","todoist" | 
-            New-TervisChocolateyPackageConfigPackage
+@"
+7zip
+baretail
+evernote
+everything
+fiddler4
+filezilla
+gimp
+github
+imgburn
+macrocreator
+nmap
+notepadplusplus
+paint.net
+pester
+putty
+rdm
+rsat
+rufus
+skype
+speedcrunch
+sumatrapdf
+sysinternals
+todoist
+vlc
+windirstat
+winmerge
+wireshark
+"@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
+        )
+    )
+},
+[PSCustomObject][Ordered] @{
+    Name = "IT Chris"
+    ChocolateyPackageConfigPackages = @(
+        (
+@"
+anki
+eclipse
+haskellplatform
+hmailserver
+ilspy
+keepass
+kindle
+pal
+scansnapmanager
+speedcrunch
+spf13-vim
+testdisk-photorec
+usbview
+ussf
+windbg
+"@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         )
     )
 }
