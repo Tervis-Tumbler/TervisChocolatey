@@ -203,12 +203,12 @@ keepass
 kindle
 pal
 scansnapmanager
-speedcrunch
 spf13-vim
 testdisk-photorec
 usbview
 ussf
 windbg
+todoist-outlook
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         )
     )
