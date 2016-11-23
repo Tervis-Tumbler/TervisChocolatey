@@ -196,7 +196,6 @@ wireshark
 @"
 anki
 eclipse
-haskellplatform
 hmailserver
 ilspy
 keepass
