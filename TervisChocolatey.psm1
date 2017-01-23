@@ -144,13 +144,16 @@ office365-2016-deployment-tool
 adobereader
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         ) +
-        (New-TervisChocolateyPackageConfigPackage -id jre8 -packageParameters "/exclude:64")
+        @(New-TervisChocolateyPackageConfigPackage -id jre8 -packageParameters "/exclude:64")
     )
 },
 [PSCustomObject][Ordered] @{
     Name = "ContactCenter"
-    ChocolateyPackageConfigPackages = @(
-        (New-TervisChocolateyPackageConfigPackage -id CiscoAgentDesktop)
+    ChocolateyPackageConfigPackages =  @(
+@"
+paint.net
+CiscoAgentDesktop
+"@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
     )
 },
 [PSCustomObject][Ordered] @{
