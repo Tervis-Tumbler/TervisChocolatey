@@ -181,6 +181,7 @@ rsat
 rufus
 skype
 speedcrunch
+sql-server-management-studio
 sumatrapdf
 sysinternals
 todoist
