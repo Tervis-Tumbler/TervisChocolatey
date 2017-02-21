@@ -215,6 +215,36 @@ todoist-outlook
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         )
     )
+},
+[PSCustomObject][Ordered] @{
+    Name = "Kjono"
+    ChocolateyPackageConfigPackages = @(
+        (
+@"
+eclipse
+keepass
+windbg
+windirstat
+winmerge
+sysinternals
+sql-server-management-studio
+skype
+putty
+rsat
+nmap
+github
+filezilla
+7zip
+evernote
+fiddler4
+greenshot
+office365-2016-deployment-tool
+CiscoJabber
+CiscoAnyConnect
+googlechrome
+"@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
+        )
+    )
 }
 
 function Get-ChocolateyPackageGroup {
