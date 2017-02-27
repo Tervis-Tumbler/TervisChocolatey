@@ -13,21 +13,20 @@ function New-TervisChocolateyPackage {
 
 function Invoke-TervisChocolateyPackPackage {
     param (
-        $PowerShellModulesPath = ($ENV:PSModulepath -split ";")[0],
+        $PackageDirectory = "$(($ENV:PSModulepath -split ";")[0])\chocolateyautomaticpackages\Static\$PackageName",
         $PackageName,
         $InstallerToBeIncluded,
         [Switch]$Force
     )
 
-    $PackageDirectory = "$PowerShellModulesPath\chocolateyautomaticpackages\Static\$PackageName\tools"
 
-    if ($InstallerToBeIncluded) {    
-       Copy-Item -Path $InstallerToBeIncluded -Destination $PackageDirectory    
+    if ($InstallerToBeIncluded) {        
+        Copy-Item -Path $InstallerToBeIncluded -Destination "$PackageDirectory\tools"
     }
 
     #&choco.exe pack $PowerShellModulesPath\chocolateyautomaticpackages\Static\$PackageName\$PackageName.nuspec --outputdirectory "\\$env:USERDNSDOMAIN\applications\Chocolatey"
     
-    choco pack $PowerShellModulesPath\chocolateyautomaticpackages\Static\$PackageName\$PackageName.nuspec --outputdirectory "\\$env:USERDNSDOMAIN\applications\Chocolatey" $(if($Force){"--force"})
+    choco pack $PackageDirectory\$PackageName.nuspec --outputdirectory "\\$env:USERDNSDOMAIN\applications\Chocolatey" $(if($Force){"--force"})
 
     if ($InstallerToBeIncluded) {
         Remove-Item -Path (Join-Path -Path $PackageDirectory -ChildPath (Split-Path -Path $InstallerToBeIncluded -Leaf))
