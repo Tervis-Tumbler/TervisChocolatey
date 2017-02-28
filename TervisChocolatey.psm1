@@ -89,7 +89,19 @@ function Install-TervisChocolatey {
     Write-Verbose "Installing Chocolatey"
     Invoke-Command -ComputerName $ComputerName -Credential $Credential -ScriptBlock {
         iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
-        refreshenv
+
+        $locations = 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment',
+                     'HKCU:\Environment'
+
+        $locations | ForEach-Object {   
+            $k = Get-Item $_
+            $k.GetValueNames() | ForEach-Object {
+                $name  = $_
+                $value = $k.GetValue($_)
+                Set-Item -Path Env:\$name -Value $value
+            }
+        }
+
         choco feature enable -n allowEmptyChecksums
         choco source add -n=Tervis -s "\\$env:USERDNSDOMAIN\applications\chocolatey\"
         choco source list
