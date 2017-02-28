@@ -89,9 +89,9 @@ function Install-TervisChocolatey {
     Write-Verbose "Installing Chocolatey"
     Invoke-Command -ComputerName $ComputerName -Credential $Credential -ScriptBlock {
         iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
-
-        $locations = 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment',
-                     'HKCU:\Environment'
+    }
+    Invoke-Command -ComputerName $ComputerName -Credential $Credential -ScriptBlock {
+        $locations = 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment'
 
         $locations | ForEach-Object {   
             $k = Get-Item $_
