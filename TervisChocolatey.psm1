@@ -108,6 +108,34 @@ function Install-TervisChocolatey {
     }
 }
 
+function Install-TervisChocolateyPackage {
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory)]$ComputerName,
+        [Parameter(Mandatory)]$PackageName,
+        $Version,
+        $PackageParameters,
+        [switch]$Force
+    )
+    
+    $ChocolateyInstallString = "choco install $PackageName -y "
+    if ($Version) {
+        $ChocolateyInstallString += "--version $Version "
+    }
+    if ($PackageParameters) {
+        $ChocolateyInstallString += "-packageParameters `"$PackageParameters`" "
+    }
+    if ($Force) {
+        $ChocolateyInstallString += "-f"
+    }
+
+    $ChocolateyInstallScriptBlock = [ScriptBlock]::Create($ChocolateyInstallString)
+
+    Write-Verbose "Executing `"$ChocolateyInstallString`" on $ComputerName"
+    
+    Invoke-Command -ComputerName $ComputerName -ScriptBlock $ChocolateyInstallScriptBlock
+}
+
 function Install-TervisChocolateyPackages {
     [CmdletBinding()]
     param (
