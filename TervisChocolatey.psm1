@@ -183,7 +183,7 @@ firefox
 autohotkey
 greenshot
 office365-2016-deployment-tool
-foxitreader
+adobereader
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         ) +
         @(New-TervisChocolateyPackageConfigPackage -id jre8 -packageParameters "/exclude:64")
@@ -287,6 +287,10 @@ googlechrome
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         )
     )
+},
+[PSCustomObject][Ordered] @{
+    Name = "KafkaBroker"
+    ChocolateyPackageConfigPackages = @(New-TervisChocolateyPackageConfigPackage -id kafka -version 0.10.2.0)
 }
 
 function Get-ChocolateyPackageGroup {
