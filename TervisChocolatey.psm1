@@ -296,7 +296,11 @@ googlechrome
     Name = "BartenderCommander"
     ChocolateyPackageConfigPackages =  @(
         (New-TervisChocolateyPackageConfigPackage -id sqlanywhereclient -version 12.0.1),
-        (New-TervisChocolateyPackageConfigPackage -id bartender -version 10.0.2868 -packageParameters "/Edition:EA /PKC:$((Get-PasswordstateCredential -PasswordID 4096 -AsPlainText).Password)")
+        (New-TervisChocolateyPackageConfigPackage -id bartender -version 10.0.2868 -packageParameters $(
+            "/Edition:EA /Remove:Librarian,LicenseServer,Samples,BatchMaker,HistoryExplorer,PrintPortal,PrintStation,PrinterMaestro,ReprintConsole,SDK /PKC:$(
+                (Get-PasswordstateCredential -PasswordID 4096 -AsPlainText).Password
+            )"
+        ))
     )
 }
 
