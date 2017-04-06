@@ -38,10 +38,11 @@ function Invoke-TervisChocolateyPackPackage {
 function Install-TervisChocolateyPackageInstall {
     param (
         [Parameter(Mandatory)]$PackageName,
+        $Source = "\\$env:USERDNSDOMAIN\applications\Chocolatey",
         [Switch]$Force
     )
 
-    choco install $PackageName --source="\\$env:USERDNSDOMAIN\applications\Chocolatey" -y --allowemptychecksum $(if($Force){"--force"})
+    choco install $PackageName --source=$Source -y --allowemptychecksum $(if($Force){"--force"})
 }
 
 function Uninstall-TervisChocolateyPackageInstall {
