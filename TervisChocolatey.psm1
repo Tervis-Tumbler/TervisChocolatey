@@ -302,6 +302,12 @@ googlechrome
             )"
         ))
     )
+},
+[PSCustomObject][Ordered] @{
+    Name = "Progistics"
+    ChocolateyPackageConfigPackages =  @(
+        (New-TervisChocolateyPackageConfigPackage -id sqlanywhereclient -version 12.0.1)
+    )
 }
 
 function Get-ChocolateyPackageGroup {
