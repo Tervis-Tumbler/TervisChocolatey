@@ -119,6 +119,7 @@ function Install-TervisChocolateyPackage {
         [Parameter(Mandatory)]$PackageName,
         $Version,
         $PackageParameters,
+        $Source = "\\$env:USERDNSDOMAIN\applications\Chocolatey",
         [switch]$Force
     )
     
@@ -128,6 +129,9 @@ function Install-TervisChocolateyPackage {
     }
     if ($PackageParameters) {
         $ChocolateyInstallString += "-packageParameters `"$PackageParameters`" "
+    }
+    if ($Source) {
+        $ChocolateyInstallString += "--source `"$Source`" "
     }
     if ($Force) {
         $ChocolateyInstallString += "-f"
