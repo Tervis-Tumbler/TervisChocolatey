@@ -317,6 +317,10 @@ googlechrome
 [PSCustomObject][Ordered] @{
     Name = "WCSJavaApplication"
     ChocolateyPackageConfigPackages =  @(
+@"
+vcredist2010
+"@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
+        ) + @(
         (New-TervisChocolateyPackageConfigPackage -id sqlanywhereclient -version 12.0.1),
         (New-TervisChocolateyPackageConfigPackage -id jre8)
     )
