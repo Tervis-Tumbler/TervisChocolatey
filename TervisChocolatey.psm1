@@ -313,6 +313,13 @@ googlechrome
     ChocolateyPackageConfigPackages =  @(
         (New-TervisChocolateyPackageConfigPackage -id sqlanywhereclient -version 12.0.1)
     )
+},
+[PSCustomObject][Ordered] @{
+    Name = "WCSJavaApplication"
+    ChocolateyPackageConfigPackages =  @(
+        (New-TervisChocolateyPackageConfigPackage -id sqlanywhereclient -version 12.0.1),
+        (New-TervisChocolateyPackageConfigPackage -id jre8)
+    )
 }
 
 function Get-ChocolateyPackageGroup {
