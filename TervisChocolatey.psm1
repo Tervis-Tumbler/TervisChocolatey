@@ -320,6 +320,16 @@ googlechrome
     )
 },
 [PSCustomObject][Ordered] @{
+    Name = "BartenderLicenseServer"
+    ChocolateyPackageConfigPackages =  @(        
+        (New-TervisChocolateyPackageConfigPackage -id bartender -version 10.0.2868 -packageParameters $(
+            "Edition=EA Remove=Librarian,PrinterMaestro,BatchMaker,HistoryExplorer AddLocal=LicenseServer PKC=$(
+                (Get-PasswordstateCredential -PasswordID 4096 -AsPlainText).Password
+            )"
+        ))
+    )
+},
+[PSCustomObject][Ordered] @{
     Name = "Progistics"
     ChocolateyPackageConfigPackages =  @(
         (New-TervisChocolateyPackageConfigPackage -id sqlanywhereclient -version 12.0.1)
