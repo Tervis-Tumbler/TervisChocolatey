@@ -325,7 +325,7 @@ googlechrome
         (New-TervisChocolateyPackageConfigPackage -id bartender -version 10.0.2868 -packageParameters $(
             "Edition=EA Remove=Librarian,PrinterMaestro,BatchMaker,HistoryExplorer AddLocal=LicenseServer PKC=$(
                 (Get-PasswordstateCredential -PasswordID 4096 -AsPlainText).Password
-            )"
+            ) /L*v `"C:\ProgramData\Seagull\install.log`""
         ))
     )
 },
