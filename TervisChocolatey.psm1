@@ -186,6 +186,22 @@ function Install-TervisChocolateyPackages {
     }
 }
 
+function Get-TervisChocholateyFileShareRepositoryPrincipalsAllowedToDelegateToAccount {
+    $ADDomain = Get-ADDomain
+    Get-DfsnFolderTarget -Path \\$($ADDomain.DNSRoot)\Applications\Chocolatey |
+    Select -ExpandProperty TargetPath |
+    ForEach-Object { ([URI]$_).Host.Split(".") | select -First 1 } |
+    Get-ADComputer -Properties PrincipalsAllowedToDelegateToAccount
+}
+
+function Set-TervisChocholateyFileShareRepositoryHostsPrincipalsAllowedToDelegateToAccount {
+    $ADDomain = Get-ADDomain
+    Get-DfsnFolderTarget -Path \\$($ADDomain.DNSRoot)\Applications\Chocolatey |
+    Select -ExpandProperty TargetPath |
+    ForEach-Object { ([URI]$_).Host.Split(".") | select -First 1 } |
+    Set-ADComputer -PrincipalsAllowedToDelegateToAccount Privilege_PrincipalsAllowedToDelegateToAccount
+}
+
 $ChocolateyPackageGroups = [PSCustomObject][Ordered] @{
     Name = "StandardOfficeEndpoint"
     ChocolateyPackageConfigPackages = @(
