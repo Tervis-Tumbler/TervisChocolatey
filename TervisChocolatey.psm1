@@ -91,7 +91,7 @@ function Install-TervisChocolatey {
 
     Invoke-Command -ComputerName $ComputerName -Credential $Credential -ScriptBlock {
         try { choco } catch {
-            iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+            cmd /c "@powershell -NoProfile -ExecutionPolicy Bypass -Command `"iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))`" && SET `"PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin`""
         }
     }
     Invoke-Command -ComputerName $ComputerName -Credential $Credential -ScriptBlock {
