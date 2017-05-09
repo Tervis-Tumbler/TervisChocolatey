@@ -316,6 +316,7 @@ office365-2016-deployment-tool
 CiscoJabber
 CiscoAnyConnect
 googlechrome
+microsoftazurestorageexplorer
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         )
     )
