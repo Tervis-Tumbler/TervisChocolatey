@@ -317,6 +317,8 @@ CiscoJabber
 CiscoAnyConnect
 googlechrome
 microsoftazurestorageexplorer
+azure-ad-powershell-module
+bluescreenview
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         )
     )
