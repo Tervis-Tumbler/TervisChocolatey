@@ -316,16 +316,13 @@ office365-2016-deployment-tool
 CiscoJabber
 CiscoAnyConnect
 googlechrome
-microsoftazurestorageexplorer
-azure-ad-powershell-module
-bluescreenview
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         )
     )
 },
 [PSCustomObject][Ordered] @{
     Name = "KafkaBroker"
-    ChocolateyPackageConfigPackages = @(New-TervisChocolateyPackageConfigPackage -id kafka -version 0.10.2.0)
+    ChocolateyPackageConfigPackages = @(New-TervisChocolateyPackageConfigPackage -id kafka)
 },
 [PSCustomObject][Ordered] @{
     Name = "BartenderCommander"
