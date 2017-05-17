@@ -361,6 +361,17 @@ vcredist2010
         (New-TervisChocolateyPackageConfigPackage -id sqlanywhereclient -version 12.0.1),
         (New-TervisChocolateyPackageConfigPackage -id jre8)
     )
+},
+[PSCustomObject][Ordered] @{
+    Name = "Phishing"
+    ChocolateyPackageConfigPackages = @(
+        (
+@"
+dotnetcore-sdk
+nssm
+"@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
+        )
+    )
 }
 
 function Get-ChocolateyPackageGroup {
