@@ -396,16 +396,6 @@ firefox
     )
 },
 [PSCustomObject][Ordered] @{
-<<<<<<< HEAD
-    Name = "StoresRemoteDesktop"
-    ChocolateyPackageConfigPackages = @(
-        (
-@"
-googlechrome
-firefox
-"@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
-        )
-=======
     Name = "OraDBARMT"
     ChocolateyPackageConfigPackages =  @(
 @"
@@ -414,7 +404,6 @@ Putty
 googlechrome
 firefox
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
->>>>>>> origin/master
     )
 }
 
