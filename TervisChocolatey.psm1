@@ -383,6 +383,17 @@ firefox
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         )
     )
+},
+[PSCustomObject][Ordered] @{
+    Name = "OraDBARMT"
+    ChocolateyPackageConfigPackages =  @(
+@"
+WinSCP
+Putty
+googlechrome
+firefox
+"@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
+    )
 }
 
 function Get-ChocolateyPackageGroup {
