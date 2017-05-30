@@ -398,7 +398,7 @@ adobereader
     )
 },
 [PSCustomObject][Ordered] @{
-    Name = "OraDBARMT"
+    Name = "OracleDBA Remote Desktop"
     ChocolateyPackageConfigPackages =  @(
 @"
 WinSCP
