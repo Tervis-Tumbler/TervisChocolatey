@@ -372,6 +372,17 @@ nssm
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         )
     )
+},
+[PSCustomObject][Ordered] @{
+    Name = "RemoteWebBrowserApp"
+    ChocolateyPackageConfigPackages = @(
+        (
+@"
+googlechrome
+firefox
+"@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
+        )
+    )
 }
 
 function Get-ChocolateyPackageGroup {
