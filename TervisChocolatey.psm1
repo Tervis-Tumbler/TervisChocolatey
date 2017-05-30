@@ -394,6 +394,28 @@ firefox
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         )
     )
+},
+[PSCustomObject][Ordered] @{
+<<<<<<< HEAD
+    Name = "StoresRemoteDesktop"
+    ChocolateyPackageConfigPackages = @(
+        (
+@"
+googlechrome
+firefox
+"@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
+        )
+=======
+    Name = "OraDBARMT"
+    ChocolateyPackageConfigPackages =  @(
+@"
+WinSCP
+Putty
+googlechrome
+firefox
+"@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
+>>>>>>> origin/master
+    )
 }
 
 function Get-ChocolateyPackageGroup {
