@@ -405,6 +405,7 @@ WinSCP
 Putty
 googlechrome
 firefox
+DotNet-4.6.2
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
     )
 }
