@@ -380,6 +380,7 @@ nssm
 @"
 googlechrome
 firefox
+adobereader
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         )
     )
@@ -391,6 +392,7 @@ firefox
 @"
 googlechrome
 firefox
+adobereader
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         )
     )
