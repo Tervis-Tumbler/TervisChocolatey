@@ -393,6 +393,7 @@ adobereader
 googlechrome
 firefox
 adobereader
+Office2016VL
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         )
     )
@@ -406,6 +407,7 @@ Putty
 googlechrome
 firefox
 DotNet-4.6.2
+Office2016VL
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
     )
 }
