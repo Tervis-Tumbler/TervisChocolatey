@@ -9,7 +9,7 @@
 `$setupPackageArgs = @{
   packageName = `$packageName
   fileType = 'EXE'
-  file = `$(Join-Path `$toolsDir "setup.exe")
+  file = `$(Join-Path `$toolsDir\SetupFiles "setup.exe")
   silentArgs = "/config `$ConfigFileLocation"
 }
 
