@@ -448,6 +448,10 @@ function New-Office2016ChocolateyPackageFromDiskImage {
     $MountedDiskImageRoot = "$(($MountedDiskImage | get-volume).DriveLetter):\"
     Copy-Item -Path $MountedDiskImageRoot\* -Destination $TemporaryWorkingDirectory\tools\SetupFiles -Recurse 
     Dismount-DiskImage -InputObject $MountedDiskImage
+    $ExesToIgnore = Get-ChildItem -Path $TemporaryWorkingDirectory\tools\SetupFiles -Recurse -Filter *.exe
+    foreach ($File in $EXEsToIgnore) {
+        New-Item -Path ($File.DirectoryName | Split-Path -Parent) -Name "$($File.Name).ignore" -ItemType File | Out-Null
+    }
 
     choco pack $TemporaryWorkingDirectory\Office2016VL.nuspec --outputdirectory $Destination --force
 
