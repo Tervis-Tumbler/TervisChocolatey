@@ -1,0 +1,16 @@
+﻿`$ErrorActionPreference = 'Stop';
+
+`$packageName = 'office2016VL'
+`$packageVersion = "$Version"
+
+`$toolsDir = "`$(Split-Path -parent `$MyInvocation.MyCommand.Definition)"
+`$ConfigFileLocation = `$(Join-Path `$toolsDir 'config.xml')
+
+`$setupPackageArgs = @{
+  packageName = `$packageName
+  fileType = 'EXE'
+  file = `$(Join-Path `$toolsDir "setup.exe")
+  silentArgs = "/config `$ConfigFileLocation"
+}
+
+Install-ChocolateyInstallPackage @setupPackageArgs

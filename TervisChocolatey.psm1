@@ -418,3 +418,38 @@ function Get-ChocolateyPackageGroup {
         $ChocolateyPackageGroups | where Name -eq $Name
     }
 }
+
+function New-Office2016ChocolateyPackageFromDiskImage {
+    param (
+        [Parameter(Mandatory)]$PathToDiskImage,
+        [Parameter(Mandatory)]$Destination,
+        [Parameter(Mandatory)]$Version,
+        $CompanyName = ""
+    )    
+    
+    $TemporaryWorkingDirectory = Join-Path -Path $env:TEMP -ChildPath "Office2016VL_PackageFiles"
+    if (Test-Path -Path $TemporaryWorkingDirectory) {
+        Remove-Item -Path $TemporaryWorkingDirectory -Recurse -Force
+    }
+    New-Item -Path $env:TEMP -Name "Office2016VL_PackageFiles" -ItemType Directory -Force | Out-Null
+    New-Item -Path $TemporaryWorkingDirectory -Name tools -ItemType Directory | Out-Null
+    New-Item -Path $TemporaryWorkingDirectory\tools -Name SetupFiles -ItemType Directory | Out-Null
+    
+    $TemplateVariables = @{
+        Version = $Version
+        CompanyName = $CompanyName
+    }
+    Invoke-ProcessTemplatePath `
+        -Path (Join-Path -Path $PSScriptRoot -ChildPath "Templates\Office2016VL") `
+        -DestinationPath $TemporaryWorkingDirectory `
+        -TemplateVariables $TemplateVariables
+
+    $MountedDiskImage = Mount-DiskImage -ImagePath $PathToDiskImage -PassThru
+    $MountedDiskImageRoot = "$(($MountedDiskImage | get-volume).DriveLetter):\"
+    Copy-Item -Path $MountedDiskImageRoot\* -Destination $TemporaryWorkingDirectory\tools\SetupFiles -Recurse 
+    Dismount-DiskImage -InputObject $MountedDiskImage
+
+    choco pack $TemporaryWorkingDirectory\Office2016VL.nuspec --outputdirectory $Destination --force
+
+    Remove-Item -Path $TemporaryWorkingDirectory -Recurse -Force    
+}
