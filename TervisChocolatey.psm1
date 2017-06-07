@@ -410,6 +410,12 @@ DotNet-4.6.2
 Office2016VL
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
     )
+},
+[PSCustomObject][Ordered] @{
+    Name = "WCSRemoteApp"
+    ChocolateyPackageConfigPackages =  @(
+        @(New-TervisChocolateyPackageConfigPackage -id jre8 -packageParameters "/exclude:64")
+    )
 }
 
 function Get-ChocolateyPackageGroup {
