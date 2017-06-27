@@ -418,3 +418,13 @@ function Get-ChocolateyPackageGroup {
         $ChocolateyPackageGroups | where Name -eq $Name
     }
 }
+
+function New-OfficeChocolateyPackageFromISO {
+    param (
+        [Parameter(Mandatory)]$PathToISO
+    )
+    $MountedIso = Mount-DiskImage -ImagePath $PathToISO -PassThru
+    Sleep 5
+    Dismount-DiskImage -InputObject $MountedIso
+
+}
