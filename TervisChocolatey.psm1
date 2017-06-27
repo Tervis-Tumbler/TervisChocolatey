@@ -359,7 +359,7 @@ vcredist2010
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         ) + @(
         (New-TervisChocolateyPackageConfigPackage -id sqlanywhereclient -version 12.0.1),
-        (New-TervisChocolateyPackageConfigPackage -id jre8)
+        (New-TervisChocolateyPackageConfigPackage -id jre8 -packageParameters "/exclude:64" )
     )
 },
 [PSCustomObject][Ordered] @{
