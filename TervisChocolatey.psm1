@@ -328,7 +328,7 @@ googlechrome
     Name = "BartenderCommander"
     ChocolateyPackageConfigPackages =  @(
         (New-TervisChocolateyPackageConfigPackage -id sqlanywhereclient -version 12.0.1),
-        (New-TervisChocolateyPackageConfigPackage -id bartender -version 10.0.2868 -packageParameters $(
+        (New-TervisChocolateyPackageConfigPackage -id bartender -version 10.0.2868.1 -packageParameters $(
             "Edition=EA Remove=Librarian,LicenseServer,PrinterMaestro,BatchMaker,HistoryExplorer PKC=$(
                 (Get-PasswordstateCredential -PasswordID 4096 -AsPlainText).Password
             )"
@@ -338,7 +338,7 @@ googlechrome
 [PSCustomObject][Ordered] @{
     Name = "BartenderLicenseServer"
     ChocolateyPackageConfigPackages =  @(        
-        (New-TervisChocolateyPackageConfigPackage -id bartender -version 10.0.2868 -packageParameters $(
+        (New-TervisChocolateyPackageConfigPackage -id bartender -version 10.0.2868.1 -packageParameters $(
             "Edition=EA Remove=Librarian,PrinterMaestro,BatchMaker,HistoryExplorer AddLocal=LicenseServer PKC=$(
                 (Get-PasswordstateCredential -PasswordID 4096 -AsPlainText).Password
             ) /L*v `"C:\ProgramData\Seagull\install.log`""
@@ -393,6 +393,7 @@ adobereader
 googlechrome
 firefox
 adobereader
+Office2016VL
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         )
     )
@@ -406,7 +407,14 @@ Putty
 googlechrome
 firefox
 DotNet-4.6.2
+Office2016VL
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
+    )
+},
+[PSCustomObject][Ordered] @{
+    Name = "WCSRemoteApp"
+    ChocolateyPackageConfigPackages =  @(
+        @(New-TervisChocolateyPackageConfigPackage -id jre8 -packageParameters "/exclude:64")
     )
 }
 
@@ -419,12 +427,41 @@ function Get-ChocolateyPackageGroup {
     }
 }
 
-function New-OfficeChocolateyPackageFromISO {
+function New-Office2016ChocolateyPackageFromDiskImage {
     param (
-        [Parameter(Mandatory)]$PathToISO
-    )
-    $MountedIso = Mount-DiskImage -ImagePath $PathToISO -PassThru
-    Sleep 5
-    Dismount-DiskImage -InputObject $MountedIso
+        [Parameter(Mandatory)]$PathToDiskImage,
+        [Parameter(Mandatory)]$Destination,
+        [Parameter(Mandatory)]$Version,
+        $CompanyName = ""
+    )    
+    
+    $TemporaryWorkingDirectory = Join-Path -Path $env:TEMP -ChildPath "Office2016VL_PackageFiles"
+    if (Test-Path -Path $TemporaryWorkingDirectory) {
+        Remove-Item -Path $TemporaryWorkingDirectory -Recurse -Force
+    }
+    New-Item -Path $env:TEMP -Name "Office2016VL_PackageFiles" -ItemType Directory -Force | Out-Null
+    New-Item -Path $TemporaryWorkingDirectory -Name tools -ItemType Directory | Out-Null
+    New-Item -Path $TemporaryWorkingDirectory\tools -Name SetupFiles -ItemType Directory | Out-Null
+    
+    $TemplateVariables = @{
+        Version = $Version
+        CompanyName = $CompanyName
+    }
+    Invoke-ProcessTemplatePath `
+        -Path (Join-Path -Path $PSScriptRoot -ChildPath "Templates\Office2016VL") `
+        -DestinationPath $TemporaryWorkingDirectory `
+        -TemplateVariables $TemplateVariables
 
+    $MountedDiskImage = Mount-DiskImage -ImagePath $PathToDiskImage -PassThru
+    $MountedDiskImageRoot = "$(($MountedDiskImage | get-volume).DriveLetter):\"
+    Copy-Item -Path $MountedDiskImageRoot\* -Destination $TemporaryWorkingDirectory\tools\SetupFiles -Recurse 
+    Dismount-DiskImage -InputObject $MountedDiskImage
+    $ExesToIgnore = Get-ChildItem -Path $TemporaryWorkingDirectory\tools\SetupFiles -Recurse -Filter *.exe
+    foreach ($File in $EXEsToIgnore) {
+        New-Item -Path "$($File.FullName).ignore" -ItemType File | Out-Null
+    }
+
+    choco pack $TemporaryWorkingDirectory\Office2016VL.nuspec --outputdirectory $Destination --force
+
+    Remove-Item -Path $TemporaryWorkingDirectory -Recurse -Force    
 }
