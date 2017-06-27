@@ -355,6 +355,7 @@ googlechrome
     Name = "WCSJavaApplication"
     ChocolateyPackageConfigPackages =  @(
 @"
+procexp
 vcredist2010
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         ) + @(
