@@ -409,6 +409,17 @@ Office2016VL
     )
 },
 [PSCustomObject][Ordered] @{
+    Name = "ScheduledTasks"
+    ChocolateyPackageConfigPackages = @(
+        (
+@"
+msonline-signin-assistant
+azure-ad-powershell-module
+"@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
+        )
+    )
+},
+[PSCustomObject][Ordered] @{
     Name = "OracleDBA Remote Desktop"
     ChocolateyPackageConfigPackages =  @(
 @"
