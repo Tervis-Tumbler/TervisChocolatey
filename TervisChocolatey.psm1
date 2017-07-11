@@ -437,7 +437,14 @@ Office2016VL
     ChocolateyPackageConfigPackages =  @(
         @(New-TervisChocolateyPackageConfigPackage -id jre8 -packageParameters "/exclude:64")
     )
+},
+[PSCustomObject][Ordered] @{
+    Name = "DataLoadClassic"
+    ChocolateyPackageConfigPackages =  @(
+        @(New-TervisChocolateyPackageConfigPackage -id javaruntime -version 7.0.60)
+    )
 }
+
 
 function Get-ChocolateyPackageGroup {
     param (
