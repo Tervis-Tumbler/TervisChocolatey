@@ -448,10 +448,13 @@ Office2016VL
 
 function Get-ChocolateyPackageGroup {
     param (
-        [Parameter(Mandatory,ValueFromPipeline)]$Name
+        [Parameter(ValueFromPipeline)]$Name
     )
     process {
-        $ChocolateyPackageGroups | where Name -eq $Name
+        $Result = $ChocolateyPackageGroups | where Name -eq $Name
+        if ($Result) {$Result} else {
+            Write-Warning "No Chocolatey package group defined for $Name"
+        }
     }
 }
 
