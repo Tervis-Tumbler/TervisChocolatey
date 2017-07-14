@@ -443,6 +443,16 @@ Office2016VL
     ChocolateyPackageConfigPackages =  @(
         @(New-TervisChocolateyPackageConfigPackage -id javaruntime -version 7.0.60)
     )
+},
+[PSCustomObject][Ordered] @{
+    Name = "WindowsApps"
+    ChocolateyPackageConfigPackages =  @(
+@"
+googlechrome
+firefox
+Office2016VL
+"@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
+    )
 }
 
 
