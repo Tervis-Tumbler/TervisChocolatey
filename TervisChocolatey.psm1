@@ -555,6 +555,10 @@ function Get-DriveLetterPathFromDiskImage {
     }
 }
 
+function Get-PathToWindows10USBInstallationSource {
+    "\\tervis.prv\applications\Installers\Microsoft\Windows 10 Enterprise USB Install"
+}
+
 function Refresh-Windows10USBInstallationSource {    
     $LatestWindows10ISO = Get-ChildItem -File -Path "\\tervis.prv\applications\Installers\Microsoft" -Filter "SW_DVD5_WIN_ENT_10*_64BIT_*" |
     Sort-Object -Property LastWriteTime -Descending |
@@ -562,7 +566,7 @@ function Refresh-Windows10USBInstallationSource {
 
     $MountedDiskImage = Mount-DiskImage -ImagePath $LatestWindows10ISO.FullName -PassThru
     $MountedDiskImageRoot = $MountedDiskImage | Get-DriveLetterPathFromDiskImage
-    $PathToWindows10USBInstallationSource = "\\tervis.prv\applications\Installers\Microsoft\Windows 10 Enterprise USB Install"
+    $PathToWindows10USBInstallationSource = Get-PathToWindows10USBInstallationSource
 
     Remove-Item -Force -Recurse -Path $PathToWindows10USBInstallationSource
     New-Item -ItemType Directory -Path $PathToWindows10USBInstallationSource
@@ -570,4 +574,9 @@ function Refresh-Windows10USBInstallationSource {
     Read-Host "The following doesn't work"
     #Get-ChildItem -Path $MountedDiskImageRoot -Recurse | Copy-Item -Destination $PathToWindows10USBInstallationSource
     #Copy-Item -Path $MountedDiskImageRoot -Destination  $PathToWindows10USBInstallationSource
+}
+
+function Install-DotNet35OnWindows10 {
+    $PathToWindows10USBInstallationSource = Get-PathToWindows10USBInstallationSource    
+    .\Dism.exe /online /enable-feature /featurename:NetFX3 /All /Source:"$PathToWindows10USBInstallationSource\sources\sxs" /LimitAccess
 }
