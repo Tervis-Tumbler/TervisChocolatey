@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+	<metadata>
+		<id>SQLServer2014SP2</id>
+		<version>$Version</version>
+		<packageSourceUrl>https://github.com/Tervis-Tumbler/TervisChocolatey</packageSourceUrl>
+		<owners>DonM</owners>
+		<title>SQLServer2014SP2</title>
+		<authors>DonM TervisIT</authors>
+		<projectUrl>http://office.com</projectUrl>
+		<iconUrl>https://upload.wikimedia.org/wikipedia/commons/4/42/Microsoft_Office_2013_logo_and_wordmark.svg</iconUrl>
+		<copyright>2016 Microsoft</copyright>
+		<licenseUrl>https://www.microsoft.com/en-us/servicesagreement/</licenseUrl>
+		<requireLicenseAcceptance>true</requireLicenseAcceptance>
+		<docsUrl>https://support.office.com/</docsUrl>
+		<tags> Office 2016 VL Volume admin</tags>
+		<summary>SQLServer2014SP2</summary>
+		<description>
+Installs SQL Server 2014 with SP2.
+		</description>
+		<dependencies>
+			<dependency id="chocolatey-uninstall.extension" />
+		</dependencies>
+		<releaseNotes>https://support.office.com/</releaseNotes>
+	</metadata>
+	<files>
+		<file src="tools\**" target="tools" />
+	</files>
+</package>
