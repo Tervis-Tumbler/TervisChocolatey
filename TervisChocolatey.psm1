@@ -533,7 +533,7 @@ function New-SQLServer2014SP2ChocolateyPackageFromDiskImage {
         -TemplateVariables $TemplateVariables
 
     $MountedDiskImage = Mount-DiskImage -ImagePath $PathToDiskImage -PassThru
-    $MountedDiskImageRoot = "$(($MountedDiskImage | get-volume).DriveLetter):\"
+    $MountedDiskImageRoot = $MountedDiskImage | Get-DriveLetterPathFromDiskImage
     Copy-Item -Path $MountedDiskImageRoot\* -Destination $TemporaryWorkingDirectory\tools\SetupFiles -Recurse 
     Dismount-DiskImage -InputObject $MountedDiskImage
     $ExesToIgnore = Get-ChildItem -Path $TemporaryWorkingDirectory\tools\SetupFiles -Recurse -Filter *.exe
@@ -544,4 +544,30 @@ function New-SQLServer2014SP2ChocolateyPackageFromDiskImage {
     choco pack $TemporaryWorkingDirectory\SQLServer2016SP2VL.nuspec --outputdirectory $Destination --force
 
     Remove-Item -Path $TemporaryWorkingDirectory -Recurse -Force    
+}
+
+function Get-DriveLetterPathFromDiskImage {
+    param (
+        [Parameter(Mandatory,ValueFromPipeline)]$DiskImage
+    )
+    process {
+        "$(($DiskImage | get-volume).DriveLetter):\"
+    }
+}
+
+function Refresh-Windows10USBInstallationSource {    
+    $LatestWindows10ISO = Get-ChildItem -File -Path "\\tervis.prv\applications\Installers\Microsoft" -Filter "SW_DVD5_WIN_ENT_10*_64BIT_*" |
+    Sort-Object -Property LastWriteTime -Descending |
+    Select-Object -First 1
+
+    $MountedDiskImage = Mount-DiskImage -ImagePath $LatestWindows10ISO.FullName -PassThru
+    $MountedDiskImageRoot = $MountedDiskImage | Get-DriveLetterPathFromDiskImage
+    $PathToWindows10USBInstallationSource = "\\tervis.prv\applications\Installers\Microsoft\Windows 10 Enterprise USB Install"
+
+    Remove-Item -Force -Recurse -Path $PathToWindows10USBInstallationSource
+    New-Item -ItemType Directory -Path $PathToWindows10USBInstallationSource
+
+    Read-Host "The following doesn't work"
+    #Get-ChildItem -Path $MountedDiskImageRoot -Recurse | Copy-Item -Destination $PathToWindows10USBInstallationSource
+    #Copy-Item -Path $MountedDiskImageRoot -Destination  $PathToWindows10USBInstallationSource
 }
