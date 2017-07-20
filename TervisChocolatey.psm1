@@ -366,6 +366,7 @@ googlechrome
 @"
 procexp
 vcredist2010
+7zip
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         ) + @(
         (New-TervisChocolateyPackageConfigPackage -id sqlanywhereclient -version 12.0.1),
