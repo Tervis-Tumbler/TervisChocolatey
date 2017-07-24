@@ -508,7 +508,8 @@ function New-ChocolateyPackageFromDiskImage {
 
     $MountedDiskImage = Mount-DiskImage -ImagePath $PathToDiskImage -PassThru
     $MountedDiskImageRoot = $MountedDiskImage | Get-DriveLetterPathFromDiskImage
-    Copy-Item -Path $MountedDiskImageRoot\* -Destination $TemporaryWorkingDirectory\tools\SetupFiles -Recurse 
+    $SetupFilesSource = Join-Path -Path $MountedDiskImageRoot -ChildPath "*"
+    Copy-Item -Path $SetupFilesSource -Destination $TemporaryWorkingDirectory\tools\SetupFiles -Recurse 
     Dismount-DiskImage -InputObject $MountedDiskImage
     $ExesToIgnore = Get-ChildItem -Path $TemporaryWorkingDirectory\tools\SetupFiles -Recurse -Filter *.exe
     foreach ($File in $EXEsToIgnore) {
