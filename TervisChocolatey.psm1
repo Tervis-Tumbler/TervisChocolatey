@@ -454,6 +454,20 @@ firefox
 Office2016VL
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
     )
+},
+[PSCustomObject][Ordered] @{
+    Name = "EBSRemoteApp"
+    ChocolateyPackageConfigPackages =  @(
+@"
+Office2010VL
+FoxitReader
+"@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
+    ) + (
+        @(New-TervisChocolateyPackageConfigPackage -id javaruntime -version 7.0.60),
+        @(New-TervisChocolateyPackageConfigPackage -id firefox -version 24.0),
+        @(New-TervisChocolateyPackageConfigPackage -id ghostscript -version 9.20),
+        @(New-TervisChocolateyPackageConfigPackage -id gimp -version 2.8.20)
+    )
 }
 
 
