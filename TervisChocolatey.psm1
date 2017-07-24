@@ -483,33 +483,31 @@ function Get-ChocolateyPackageGroup {
     }
 }
 
-function New-Office2016ChocolateyPackageFromDiskImage {
+function New-ChocolateyPackageFromDiskImage {
     param (
+        [Parameter(Mandatory)]$PackageName,
         [Parameter(Mandatory)]$PathToDiskImage,
         [Parameter(Mandatory)]$Destination,
-        [Parameter(Mandatory)]$Version,
-        $CompanyName = ""
+        [hashtable]$TemplateVariables
     )    
     
-    $TemporaryWorkingDirectory = Join-Path -Path $env:TEMP -ChildPath "Office2016VL_PackageFiles"
+    $TemporaryWorkingDirectory = Join-Path -Path $env:TEMP -ChildPath "$($PackageName)_PackageFiles"
     if (Test-Path -Path $TemporaryWorkingDirectory) {
         Remove-Item -Path $TemporaryWorkingDirectory -Recurse -Force
     }
-    New-Item -Path $env:TEMP -Name "Office2016VL_PackageFiles" -ItemType Directory -Force | Out-Null
+    New-Item -Path $env:TEMP -Name "$($PackageName)_PackageFiles" -ItemType Directory -Force | Out-Null
     New-Item -Path $TemporaryWorkingDirectory -Name tools -ItemType Directory | Out-Null
     New-Item -Path $TemporaryWorkingDirectory\tools -Name SetupFiles -ItemType Directory | Out-Null
     
-    $TemplateVariables = @{
-        Version = $Version
-        CompanyName = $CompanyName
+    if ($TemplateVariables) {
+        Invoke-ProcessTemplatePath `
+            -Path (Join-Path -Path $PSScriptRoot -ChildPath "Templates\$PackageName") `
+            -DestinationPath $TemporaryWorkingDirectory `
+            -TemplateVariables $TemplateVariables
     }
-    Invoke-ProcessTemplatePath `
-        -Path (Join-Path -Path $PSScriptRoot -ChildPath "Templates\Office2016VL") `
-        -DestinationPath $TemporaryWorkingDirectory `
-        -TemplateVariables $TemplateVariables
 
     $MountedDiskImage = Mount-DiskImage -ImagePath $PathToDiskImage -PassThru
-    $MountedDiskImageRoot = "$(($MountedDiskImage | get-volume).DriveLetter):\"
+    $MountedDiskImageRoot = $MountedDiskImage | Get-DriveLetterPathFromDiskImage
     Copy-Item -Path $MountedDiskImageRoot\* -Destination $TemporaryWorkingDirectory\tools\SetupFiles -Recurse 
     Dismount-DiskImage -InputObject $MountedDiskImage
     $ExesToIgnore = Get-ChildItem -Path $TemporaryWorkingDirectory\tools\SetupFiles -Recurse -Filter *.exe
@@ -517,9 +515,41 @@ function New-Office2016ChocolateyPackageFromDiskImage {
         New-Item -Path "$($File.FullName).ignore" -ItemType File | Out-Null
     }
 
-    choco pack $TemporaryWorkingDirectory\Office2016VL.nuspec --outputdirectory $Destination --force
+    choco pack "$TemporaryWorkingDirectory\$($PackageName).nuspec" --outputdirectory $Destination --force
 
     Remove-Item -Path $TemporaryWorkingDirectory -Recurse -Force    
+}
+
+function New-Office2016ChocolateyPackageFromDiskImage {
+    param (
+        [Parameter(Mandatory)]$PathToDiskImage,
+        [Parameter(Mandatory)]$Destination,
+        [Parameter(Mandatory)]$Version,
+        $CompanyName = ""
+    )      
+    $PackageName = "Office2016VL"
+    $TemplateVariables = @{
+        Version = $Version
+        CompanyName = $CompanyName
+    }
+
+    New-ChocolateyPackageFromDiskImage -PackageName $PackageName -PathToDiskImage $PathToDiskImage -Destination $Destination -TemplateVariables $TemplateVariables   
+}
+
+function New-Office2010ChocolateyPackageFromDiskImage {
+    param (
+        [Parameter(Mandatory)]$PathToDiskImage,
+        [Parameter(Mandatory)]$Destination,
+        [Parameter(Mandatory)]$Version,
+        $CompanyName = ""
+    )      
+    $PackageName = "Office2010VL"
+    $TemplateVariables = @{
+        Version = $Version
+        CompanyName = $CompanyName
+    }
+
+    New-ChocolateyPackageFromDiskImage -PackageName $PackageName -PathToDiskImage $PathToDiskImage -Destination $Destination -TemplateVariables $TemplateVariables   
 }
 
 function New-SQLServer2014SP2ChocolateyPackageFromDiskImage {
