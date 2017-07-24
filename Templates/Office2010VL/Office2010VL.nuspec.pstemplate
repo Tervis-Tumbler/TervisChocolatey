@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+	<metadata>
+		<id>Office2010VL</id>
+		<version>$Version</version>
+		<packageSourceUrl>https://github.com/Tervis-Tumbler/TervisChocolatey</packageSourceUrl>
+		<owners>hambone</owners>
+		<title>Office 2010 Volume Licensed</title>
+		<authors>hambone TervisIT</authors>
+		<projectUrl>http://office.com</projectUrl>
+		<iconUrl>https://upload.wikimedia.org/wikipedia/commons/4/42/Microsoft_Office_2013_logo_and_wordmark.svg</iconUrl>
+		<copyright>2010 Microsoft</copyright>
+		<licenseUrl>https://www.microsoft.com/en-us/servicesagreement/</licenseUrl>
+		<requireLicenseAcceptance>true</requireLicenseAcceptance>
+		<docsUrl>https://support.office.com/</docsUrl>
+		<tags> Office 2010 VL Volume admin</tags>
+		<summary>Office 2010 Volume Licensed</summary>
+		<description>
+Installs Office 2010 32-bit Volume Licensed.
+		</description>
+		<dependencies>
+			<dependency id="chocolatey-uninstall.extension" />
+		</dependencies>
+		<releaseNotes>https://support.office.com/</releaseNotes>
+	</metadata>
+	<files>
+		<file src="tools\**" target="tools" />
+	</files>
+</package>
