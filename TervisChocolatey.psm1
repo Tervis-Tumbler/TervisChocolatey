@@ -168,7 +168,7 @@ function Install-TervisChocolateyPackages {
         select -ExpandProperty group
 
     if ($ChocolateyPackagesIncludedMoreThanOnce) {        
-        Throw "There are chocolatey packages included more than once: $ChocolateyPackagesIncludedMoreThanOnce"
+        throw "There are chocolatey packages included more than once: $($ChocolateyPackagesIncludedMoreThanOnce.id)"
     }
 
     $ChocolateyPackageConfig = New-TervisChocolateyPackageConfig -PackageConfigPackages $ChocolateyPackageGroups.ChocolateyPackageConfigPackages
