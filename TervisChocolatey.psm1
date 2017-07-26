@@ -345,6 +345,17 @@ googlechrome
     )
 },
 [PSCustomObject][Ordered] @{
+    Name = "BartenderIntegrationService"
+    ChocolateyPackageConfigPackages =  @(
+        (New-TervisChocolateyPackageConfigPackage -id sqlanywhereclient -version 12.0.1),
+        (New-TervisChocolateyPackageConfigPackage -id bartender -version 11.0.4.3127 -packageParameters $(
+            "Edition=EA ADDLOCAL=BarTender,IntegrationBuilder PKC=$(
+                (Get-PasswordstateCredential -PasswordID 4096 -AsPlainText).Password
+            )"
+        ))
+    )
+},
+[PSCustomObject][Ordered] @{
     Name = "BartenderLicenseServer"
     ChocolateyPackageConfigPackages =  @(        
         (New-TervisChocolateyPackageConfigPackage -id bartender -version 10.0.2868.1 -packageParameters $(
