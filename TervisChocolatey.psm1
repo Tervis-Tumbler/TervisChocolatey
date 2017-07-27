@@ -481,6 +481,16 @@ FoxitReader
             (New-TervisChocolateyPackageConfigPackage -id gimp -version 2.8.20)
         )
     )
+},
+[PSCustomObject][Ordered] @{
+    Name = "FillRoomSurface"
+    ChocolateyPackageConfigPackages = @(
+        (
+@"
+autohotkey
+"@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
+        )
+    )
 }
 
 
