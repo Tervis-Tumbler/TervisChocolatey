@@ -578,58 +578,69 @@ function New-Office2010ChocolateyPackageFromDiskImage {
 
 function New-SQLServer2014SP2ChocolateyPackageFromDiskImage {
     param (
-        [Parameter(Mandatory)]$PathToDiskImage,
         [Parameter(Mandatory)]$Destination,
         [Parameter(Mandatory)]$Version,
         $CompanyName = ""
-    )      
-    $PackageName = "SQLServer2016SP2"
+    )    
+    
+    $TemporaryWorkingDirectory = Join-Path -Path $env:TEMP -ChildPath "SQL Server 2014 with SP2"
+    if (Test-Path -Path $TemporaryWorkingDirectory) {
+        Remove-Item -Path $TemporaryWorkingDirectory -Recurse -Force
+    }
+    New-Item -Path $env:TEMP -Name "SQLServer2014SP2_PackageFiles" -ItemType Directory -Force | Out-Null
+    New-Item -Path $TemporaryWorkingDirectory -Name tools -ItemType Directory | Out-Null
+    New-Item -Path $TemporaryWorkingDirectory\tools -Name SetupFiles -ItemType Directory | Out-Null
     $TemplateVariables = @{
         Version = $Version
         CompanyName = $CompanyName
     }
+    Invoke-ProcessTemplatePath `
+        -Path (Join-Path -Path $PSScriptRoot -ChildPath "Templates\SQLServer2014SP2") `
+        -DestinationPath $TemporaryWorkingDirectory `
+        -TemplateVariables $TemplateVariables
 
-    New-ChocolateyPackageFromDiskImage -PackageName $PackageName -PathToDiskImage $PathToDiskImage -Destination $Destination -TemplateVariables $TemplateVariables   
+    $ExesToIgnore = Get-ChildItem -Path $TemporaryWorkingDirectory\tools\SetupFiles -Recurse -Filter *.exe
+    foreach ($File in $EXEsToIgnore) {
+        New-Item -Path "$($File.FullName).ignore" -ItemType File | Out-Null
+    }
+
+    choco pack $TemporaryWorkingDirectory\SQLServer2014SP2.nuspec --outputdirectory $Destination --force
+
+    Remove-Item -Path $TemporaryWorkingDirectory -Recurse -Force    
 }
 
-#function New-SQLServer2014SP2ChocolateyPackageFromDiskImage {
-#    param (
-#        [Parameter(Mandatory)]$PathToDiskImage,
-#        [Parameter(Mandatory)]$Destination,
-#        [Parameter(Mandatory)]$Version,
-#        $CompanyName = ""
-#    )    
-#    
-#    $TemporaryWorkingDirectory = Join-Path -Path $env:TEMP -ChildPath "SQL Server 2014 with SP2"
-#    if (Test-Path -Path $TemporaryWorkingDirectory) {
-#        Remove-Item -Path $TemporaryWorkingDirectory -Recurse -Force
-#    }
-#    New-Item -Path $env:TEMP -Name "SQLServer2014SP2_PackageFiles" -ItemType Directory -Force | Out-Null
-#    New-Item -Path $TemporaryWorkingDirectory -Name tools -ItemType Directory | Out-Null
-#    New-Item -Path $TemporaryWorkingDirectory\tools -Name SetupFiles -ItemType Directory | Out-Null
-#    
-#    $TemplateVariables = @{
-#        Version = $Version
-#        CompanyName = $CompanyName
-#    }
-#    Invoke-ProcessTemplatePath `
-#        -Path (Join-Path -Path $PSScriptRoot -ChildPath "Templates\SQLServer2014SP2") `
-#        -DestinationPath $TemporaryWorkingDirectory `
-#        -TemplateVariables $TemplateVariables
-#
-#    $MountedDiskImage = Mount-DiskImage -ImagePath $PathToDiskImage -PassThru
-#    $MountedDiskImageRoot = $MountedDiskImage | Get-DriveLetterPathFromDiskImage
-#    Copy-Item -Path $MountedDiskImageRoot\* -Destination $TemporaryWorkingDirectory\tools\SetupFiles -Recurse 
-#    Dismount-DiskImage -InputObject $MountedDiskImage
-#    $ExesToIgnore = Get-ChildItem -Path $TemporaryWorkingDirectory\tools\SetupFiles -Recurse -Filter *.exe
-#    foreach ($File in $EXEsToIgnore) {
-#        New-Item -Path "$($File.FullName).ignore" -ItemType File | Out-Null
-#    }
-#
-#    choco pack $TemporaryWorkingDirectory\SQLServer2016SP2VL.nuspec --outputdirectory $Destination --force
-#
-#    Remove-Item -Path $TemporaryWorkingDirectory -Recurse -Force    
-#}
+function New-SCDPM2016ChocolateyPackageFromDiskImage {
+    param (
+        [Parameter(Mandatory)]$Destination,
+        [Parameter(Mandatory)]$Version,
+        $CompanyName = ""
+    )    
+    
+    $TemporaryWorkingDirectory = Join-Path -Path $env:TEMP -ChildPath "SCDPM2016"
+    if (Test-Path -Path $TemporaryWorkingDirectory) {
+        Remove-Item -Path $TemporaryWorkingDirectory -Recurse -Force
+    }
+    New-Item -Path $env:TEMP -Name "SCDPM2016_PackageFiles" -ItemType Directory -Force | Out-Null
+    New-Item -Path $TemporaryWorkingDirectory -Name tools -ItemType Directory | Out-Null
+    New-Item -Path $TemporaryWorkingDirectory\tools -Name SetupFiles -ItemType Directory | Out-Null
+    $TemplateVariables = @{
+        Version = $Version
+        CompanyName = $CompanyName
+    }
+    Invoke-ProcessTemplatePath `
+        -Path (Join-Path -Path $PSScriptRoot -ChildPath "Templates\SCDPM2016") `
+        -DestinationPath $TemporaryWorkingDirectory `
+        -TemplateVariables $TemplateVariables
+
+    $ExesToIgnore = Get-ChildItem -Path $TemporaryWorkingDirectory\tools\SetupFiles -Recurse -Filter *.exe
+    foreach ($File in $EXEsToIgnore) {
+        New-Item -Path "$($File.FullName).ignore" -ItemType File | Out-Null
+    }
+
+    choco pack $TemporaryWorkingDirectory\SCDPM2016.nuspec --outputdirectory $Destination --force
+
+    Remove-Item -Path $TemporaryWorkingDirectory -Recurse -Force    
+}
 
 function Get-DriveLetterPathFromDiskImage {
     param (
