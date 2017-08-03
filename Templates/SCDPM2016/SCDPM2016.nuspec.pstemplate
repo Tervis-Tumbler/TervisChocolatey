@@ -1,24 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
 	<metadata>
-		<id>SQLServer2014SP2</id>
+		<id>SCDPM2016</id>
 		<version>$Version</version>
 		<packageSourceUrl>https://github.com/Tervis-Tumbler/TervisChocolatey</packageSourceUrl>
 		<owners>DonM</owners>
-		<title>SQLServer2014SP2</title>
+		<title>DPM2016</title>
 		<authors>DonM TervisIT</authors>
-		<projectUrl>http://office.com</projectUrl>
-		<iconUrl>https://upload.wikimedia.org/wikipedia/commons/4/42/Microsoft_Office_2013_logo_and_wordmark.svg</iconUrl>
+		<projectUrl>Http://microsoft.com</projectUrl>
 		<copyright>2016 Microsoft</copyright>
 		<licenseUrl>https://www.microsoft.com/en-us/servicesagreement/</licenseUrl>
 		<requireLicenseAcceptance>true</requireLicenseAcceptance>
-		<docsUrl>https://support.office.com/</docsUrl>
-		<tags> Office 2016 VL Volume admin</tags>
-		<summary>SQLServer2014SP2</summary>
+		<docsUrl>https://support.microsoft.com/</docsUrl>
+		<tags>SCDPM 2016</tags>
+		<summary>SCDPM2016</summary>
 		<description>
-Installs SQL Server 2014 with SP2.
+Installs System Center Data Protection Manager 2016.
 		</description>
-		<releaseNotes>https://support.office.com/</releaseNotes>
+		<releaseNotes>https://support.microsoft.com/</releaseNotes>
   	</metadata>
   	<files>
 		<file src="tools\**" target="tools" />
