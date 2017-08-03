@@ -359,7 +359,7 @@ googlechrome
     Name = "BartenderLicenseServer"
     ChocolateyPackageConfigPackages =  @(        
         (New-TervisChocolateyPackageConfigPackage -id bartender -version 11.0.4.3127 -packageParameters $(
-            "Edition=EA ADDLOCAL=LicenseServer REMOVE=Bartender,AdministrationConsole,Librarian,HistoryExplorer,BatchMaker,PrintStation,PrinterMaestro,ReprintConsole PKC=$(
+            "Edition=EA ADDLOCAL=LicenseServer,Bartender REMOVE=AdministrationConsole,Librarian,HistoryExplorer,BatchMaker,PrintStation,PrinterMaestro,ReprintConsole PKC=$(
                 (Get-PasswordstateCredential -PasswordID 4096 -AsPlainText).Password
             )"
         ))
