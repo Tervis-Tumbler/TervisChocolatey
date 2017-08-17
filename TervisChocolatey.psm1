@@ -491,6 +491,16 @@ autohotkey
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         )
     )
+},
+[PSCustomObject][Ordered] @{
+    Name = "SurfaceMES"
+    ChocolateyPackageConfigPackages = @(
+        (
+@"
+autohotkey
+"@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
+        )
+    )
 }
 
 
