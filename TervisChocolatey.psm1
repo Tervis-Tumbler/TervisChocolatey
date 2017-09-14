@@ -447,7 +447,14 @@ Office2016VL
 [PSCustomObject][Ordered] @{
     Name = "WCSRemoteApp"
     ChocolateyPackageConfigPackages =  @(
-        @(New-TervisChocolateyPackageConfigPackage -id jre8 -packageParameters "/exclude:64")
+@"
+FoxitReader
+"@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
+    ) + (
+        @(
+            (New-TervisChocolateyPackageConfigPackage -id javaruntime -version 7.0.60)
+        )
+#        @(New-TervisChocolateyPackageConfigPackage -id jre8 -packageParameters "/exclude:64")
     )
 },
 [PSCustomObject][Ordered] @{
