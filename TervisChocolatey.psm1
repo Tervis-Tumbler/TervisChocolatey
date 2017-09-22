@@ -508,6 +508,16 @@ autohotkey
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         )
     )
+},
+[PSCustomObject][Ordered] @{
+    Name = "SilverlightIE"
+    ChocolateyPackageConfigPackages = @(
+        (
+@"
+silverlight
+"@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
+        )
+    )
 }
 
 
