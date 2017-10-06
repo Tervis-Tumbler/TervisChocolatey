@@ -709,7 +709,9 @@ function Refresh-Windows10USBInstallationSource {
     #Copy-Item -Path $MountedDiskImageRoot -Destination  $PathToWindows10USBInstallationSource
 }
 
+<#
 function Install-DotNet35OnWindows10 {
     $PathToWindows10USBInstallationSource = Get-PathToWindows10USBInstallationSource
     .\Dism.exe /online /enable-feature /featurename:NetFX3 /All /Source:"$PathToWindows10USBInstallationSource\sources\sxs" /LimitAccess
 }
+#>
