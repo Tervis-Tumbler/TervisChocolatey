@@ -597,6 +597,22 @@ function New-Office2016ChocolateyPackageFromDiskImage {
     New-ChocolateyPackageFromDiskImage -PackageName $PackageName -PathToDiskImage $PathToDiskImage -Destination $Destination -TemplateVariables $TemplateVariables   
 }
 
+function New-SQL2016StandardPackageFromDiskImage {
+    param (
+        [Parameter(Mandatory)]$PathToDiskImage,
+        [Parameter(Mandatory)]$Destination,
+        [Parameter(Mandatory)]$Version,
+        $CompanyName = ""
+    )      
+    $PackageName = "SQL2016Standard"
+    $TemplateVariables = @{
+        Version = $Version
+        CompanyName = $CompanyName
+    }
+
+    New-ChocolateyPackageFromDiskImage -PackageName $PackageName -PathToDiskImage $PathToDiskImage -Destination $Destination -TemplateVariables $TemplateVariables   
+}
+
 function New-Office2010ChocolateyPackageFromDiskImage {
     param (
         [Parameter(Mandatory)]$PathToDiskImage,

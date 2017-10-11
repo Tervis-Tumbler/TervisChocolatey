@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+	<metadata>
+		<id>SQLServer2016Standard</id>
+		<version>$Version</version>
+		<packageSourceUrl>https://github.com/Tervis-Tumbler/TervisChocolatey</packageSourceUrl>
+		<owners>GKjono</owners>
+		<title>SQLServer2016Standard</title>
+		<authors>Gkjono TervisIT</authors>
+		<projectUrl>https://www.microsoft.com/en-us/sql-server/default.aspx</projectUrl>
+		<iconUrl>https://upload.wikimedia.org/wikipedia/commons/4/42/Microsoft_Office_2013_logo_and_wordmark.svg</iconUrl>
+		<copyright>2016 Microsoft</copyright>
+		<licenseUrl>https://www.microsoft.com/en-us/servicesagreement/</licenseUrl>
+		<requireLicenseAcceptance>true</requireLicenseAcceptance>
+		<docsUrl>https://support.office.com/</docsUrl>
+		<tags>SQL 2016</tags>
+		<summary>SQLServer2016Standard</summary>
+		<description>
+Installs SQL Server 2016 Standard Edition.
+		</description>
+		<releaseNotes>https://support.office.com/</releaseNotes>
+  	</metadata>
+  	<files>
+		<file src="tools\**" target="tools" />
+	</files>
+</package>
