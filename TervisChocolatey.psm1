@@ -528,6 +528,16 @@ adobereader
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         )
     )
+},
+[PSCustomObject][Ordered] @{
+    Name = "SCCM2016"
+    ChocolateyPackageConfigPackages = @(
+        (
+@"
+sql-server-management-studio
+"@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
+        )
+    )
 }
 
 
@@ -626,6 +636,39 @@ function New-SQL2016StandardPackageFromDiskImage {
     }
 
     choco pack $TemporaryWorkingDirectory\SQLServer2016Standard.nuspec --outputdirectory $Destination --force
+
+    Remove-Item -Path $TemporaryWorkingDirectory -Recurse -Force    
+}
+
+function New-SCCM2016PackageFromDiskImage {
+    param (
+        [Parameter(Mandatory)]$Destination,
+        [Parameter(Mandatory)]$Version,
+        $CompanyName = ""
+    )    
+    
+    $TemporaryWorkingDirectory = Join-Path -Path $env:TEMP -ChildPath 'SCCM2016'
+    if (Test-Path -Path $TemporaryWorkingDirectory) {
+        Remove-Item -Path $TemporaryWorkingDirectory -Recurse -Force
+    }
+    New-Item -Path $env:TEMP -Name "SCCM2016" -ItemType Directory -Force | Out-Null
+    New-Item -Path $TemporaryWorkingDirectory -Name tools -ItemType Directory | Out-Null
+    New-Item -Path $TemporaryWorkingDirectory\tools -Name SetupFiles -ItemType Directory | Out-Null
+    $TemplateVariables = @{
+        Version = $Version
+        CompanyName = $CompanyName
+    }
+    Invoke-ProcessTemplatePath `
+        -Path 'C:\Program Files\WindowsPowerShell\Modules\TervisChocolatey\Templates\SCCM2016' `
+        -DestinationPath $TemporaryWorkingDirectory `
+        -TemplateVariables $TemplateVariables -Verbose
+
+    $ExesToIgnore = Get-ChildItem -Path $TemporaryWorkingDirectory\tools\SetupFiles -Recurse -Filter *.exe
+    foreach ($File in $EXEsToIgnore) {
+        New-Item -Path "$($File.FullName).ignore" -ItemType File | Out-Null
+    }
+
+    choco pack $TemporaryWorkingDirectory\SCCM2016.nuspec --outputdirectory $Destination --force
 
     Remove-Item -Path $TemporaryWorkingDirectory -Recurse -Force    
 }

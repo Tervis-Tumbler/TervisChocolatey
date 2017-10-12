@@ -1,0 +1,4 @@
+<Configuration Product="ProPlus">
+	<Display Level="none" CompletionNotice="no" SuppressModal="yes" AcceptEula="yes" />
+    <COMPANYNAME Value="$CompanyName" />
+</Configuration>
