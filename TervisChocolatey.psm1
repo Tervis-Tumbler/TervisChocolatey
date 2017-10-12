@@ -599,18 +599,35 @@ function New-Office2016ChocolateyPackageFromDiskImage {
 
 function New-SQL2016StandardPackageFromDiskImage {
     param (
-        [Parameter(Mandatory)]$PathToDiskImage,
         [Parameter(Mandatory)]$Destination,
         [Parameter(Mandatory)]$Version,
         $CompanyName = ""
-    )      
-    $PackageName = "SQL2016Standard"
+    )    
+    
+    $TemporaryWorkingDirectory = Join-Path -Path $env:TEMP -ChildPath "SQL2016Standard"
+    if (Test-Path -Path $TemporaryWorkingDirectory) {
+        Remove-Item -Path $TemporaryWorkingDirectory -Recurse -Force
+    }
+    New-Item -Path $env:TEMP -Name "SQL2016Standard" -ItemType Directory -Force | Out-Null
+    New-Item -Path $TemporaryWorkingDirectory -Name tools -ItemType Directory | Out-Null
+    New-Item -Path $TemporaryWorkingDirectory\tools -Name SetupFiles -ItemType Directory | Out-Null
     $TemplateVariables = @{
         Version = $Version
         CompanyName = $CompanyName
     }
+    Invoke-ProcessTemplatePath `
+        -Path 'C:\Program Files\WindowsPowerShell\Modules\TervisChocolatey\Templates\SQL2016Standard' `
+        -DestinationPath $TemporaryWorkingDirectory `
+        -TemplateVariables $TemplateVariables -Verbose
 
-    New-ChocolateyPackageFromDiskImage -PackageName $PackageName -PathToDiskImage $PathToDiskImage -Destination $Destination -TemplateVariables $TemplateVariables   
+    $ExesToIgnore = Get-ChildItem -Path $TemporaryWorkingDirectory\tools\SetupFiles -Recurse -Filter *.exe
+    foreach ($File in $EXEsToIgnore) {
+        New-Item -Path "$($File.FullName).ignore" -ItemType File | Out-Null
+    }
+
+    choco pack $TemporaryWorkingDirectory\SQLServer2016Standard.nuspec --outputdirectory $Destination --force
+
+    Remove-Item -Path $TemporaryWorkingDirectory -Recurse -Force    
 }
 
 function New-Office2010ChocolateyPackageFromDiskImage {
