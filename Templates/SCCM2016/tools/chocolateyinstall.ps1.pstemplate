@@ -10,7 +10,7 @@
   packageName = `$packageName
   fileType = 'EXE'
   file = '\\tervis.prv\applications\Installers\Microsoft\SCCM2016(1702)\SMSSETUP\BIN\X64\setup.exe'
-  silentArgs = "/IAcceptSQLServerLicenseTerms /ACTION=Install /ENU=1 /QUIET=1 /QUIETSIMPLE=0 /UpdateEnabled=0 /ERRORREPORTING=0 /USEMICROSOFTUPDATE=1 /FEATURES=SQLENGINE,RS,SSMS,ADV_SSMS /UpdateSource=MU /HELP=0 /INDICATEPROGRESS=0 /X86=0 /INSTANCENAME=MSSQLSERVER /SQMREPORTING=0 /INSTANCEID=MSSQLSERVER /RSINSTALLMODE=DefaultNativeMode /AGTSVCSTARTUPTYPE=Automatic /COMMFABRICPORT=0 /COMMFABRICNETWORKLEVEL=0 /COMMFABRICENCRYPTION=0 /MATRIXCMBRICKCOMMPORT=0 /SQLSVCSTARTUPTYPE=Automatic /FILESTREAMLEVEL=0 /ENABLERANU=0 /SQLCOLLATION=SQL_Latin1_General_CP1_CI_AS /SQLSYSADMINACCOUNTS=Privilege_InfrastructureSCCM2016Administrator /SECURITYMODE=SQL /ADDCURRENTUSERASSQLADMIN=False /TCPENABLED=1 /NPENABLED=0 /BROWSERSVCSTARTUPTYPE=Disabled  /RSSVCSTARTUPTYPE=Automatic `$PackageParameters"
+  silentArgs = "/ACTION=InstallCAS /CDLATEST=1 /HIDDEN /SCRIPT=%TEMP%\ConfigMgrAutoSave.ini /SDKINST=sccm.tervis.com /PrerequisiteComp=0 /AdminConsole=1 /JoinCEIP=0 /SMSInstallDir='%ProgramFiles%\Microsoft Configuration Manager' /CASRetryInterval=2 /WaitForCASTimeout=1 `$PackageParameters"
 }
 
 Install-ChocolateyInstallPackage @setupPackageArgs
