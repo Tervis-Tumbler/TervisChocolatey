@@ -538,6 +538,16 @@ sql-server-management-studio
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         )
     )
+},
+[PSCustomObject][Ordered] @{
+    Name = "UnifiController"
+    ChocolateyPackageConfigPackages = @(
+        (
+@"
+ubiquiti-unifi-controller
+"@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
+        )
+    )
 }
 
 
