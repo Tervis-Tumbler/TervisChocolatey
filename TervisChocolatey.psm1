@@ -535,6 +535,7 @@ adobereader
         (
 @"
 sql-server-management-studio
+windows-adk
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         )
     )
