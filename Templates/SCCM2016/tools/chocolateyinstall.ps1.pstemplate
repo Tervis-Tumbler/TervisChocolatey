@@ -10,7 +10,7 @@
   packageName = `$packageName
   fileType = 'EXE'
   file = '\\tervis.prv\applications\Installers\Microsoft\SCCM2016(1702)\SMSSETUP\BIN\X64\setup.exe'
-  silentArgs = "/ACTION=InstallCAS /CDLATEST=1 /HIDDEN /SCRIPT=C:\Temp\ConfigMgrAutoSave.ini /SDKINST=sccm.tervis.com /PrerequisiteComp=0 /AdminConsole=1 /JoinCEIP=0 /SMSInstallDir='%ProgramFiles%\Microsoft Configuration Manager' /CASRetryInterval=2 /WaitForCASTimeout=1 `$PackageParameters"
+  silentArgs = "/HIDDEN /SCRIPT=C:\Temp\ConfigMgrAutoSave.ini `$PackageParameters"
 }
 
 Install-ChocolateyInstallPackage @setupPackageArgs
