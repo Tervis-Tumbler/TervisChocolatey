@@ -235,7 +235,6 @@ adobereader
     ChocolateyPackageConfigPackages =  @(
 @"
 paint.net
-CiscoAgentDesktop
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
     )
 },
