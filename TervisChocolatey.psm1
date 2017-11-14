@@ -548,8 +548,17 @@ ubiquiti-unifi-controller
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         )
     )
+},
+[PSCustomObject][Ordered] @{
+    Name = "PrintServer"
+    ChocolateyPackageConfigPackages = @(
+        (
+@"
+google-cloud-print-connector
+"@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
+        )
+    )
 }
-
 
 function Get-ChocolateyPackageGroup {
     param (
