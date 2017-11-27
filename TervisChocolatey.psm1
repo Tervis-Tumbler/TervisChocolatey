@@ -80,31 +80,33 @@ function New-TervisChocolateyPackageConfig {
 function Install-TervisChocolatey {
     [CmdletBinding()]
     param (
-        $ComputerName,
+        [Parameter(ValueFromPipelineByPropertyName)]$ComputerName,
         $Credential = [System.Management.Automation.PSCredential]::Empty
     )
-    Write-Verbose "Installing Chocolatey"
+    process {
+        Write-Verbose "Installing Chocolatey"
 
-    Invoke-Command -ComputerName $ComputerName -Credential $Credential -ScriptBlock {
-        try { choco } catch {
-            cmd /c "@powershell -NoProfile -ExecutionPolicy Bypass -Command `"iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))`" && SET `"PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin`""
-        }
-    }
-    Invoke-Command -ComputerName $ComputerName -Credential $Credential -ScriptBlock {
-        $locations = 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment'
-
-        $locations | ForEach-Object {   
-            $k = Get-Item $_
-            $k.GetValueNames() | ForEach-Object {
-                $name  = $_
-                $value = $k.GetValue($_)
-                Set-Item -Path Env:\$name -Value $value
+        Invoke-Command -ComputerName $ComputerName -Credential $Credential -ScriptBlock {
+            try { choco } catch {
+                cmd /c "@powershell -NoProfile -ExecutionPolicy Bypass -Command `"iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))`" && SET `"PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin`""
             }
         }
+        Invoke-Command -ComputerName $ComputerName -Credential $Credential -ScriptBlock {
+            $locations = 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment'
 
-        choco feature enable -n allowEmptyChecksums
-        choco source add -n=Tervis -s "\\$env:USERDNSDOMAIN\applications\chocolatey\"
-        choco source list
+            $locations | ForEach-Object {   
+                $k = Get-Item $_
+                $k.GetValueNames() | ForEach-Object {
+                    $name  = $_
+                    $value = $k.GetValue($_)
+                    Set-Item -Path Env:\$name -Value $value
+                }
+            }
+
+            choco feature enable -n allowEmptyChecksums
+            choco source add -n=Tervis -s "\\$env:USERDNSDOMAIN\applications\chocolatey\"
+            choco source list
+        }
     }
 }
 
