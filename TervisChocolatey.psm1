@@ -111,33 +111,34 @@ function Install-TervisChocolatey {
 function Install-TervisChocolateyPackage {
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory)]$ComputerName,
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]$ComputerName,
         [Parameter(Mandatory)]$PackageName,
         $Version,
         $PackageParameters,
         $Source,
         [switch]$Force
     )
-    
-    $ChocolateyInstallString = "choco install $PackageName -y "
-    if ($Version) {
-        $ChocolateyInstallString += "--version $Version "
-    }
-    if ($PackageParameters) {
-        $ChocolateyInstallString += "-packageParameters `"$PackageParameters`" "
-    }
-    if ($Source) {
-        $ChocolateyInstallString += "--source `"$Source`" "
-    }
-    if ($Force) {
-        $ChocolateyInstallString += "-f"
-    }
+    process {    
+        $ChocolateyInstallString = "choco install $PackageName -y "
+        if ($Version) {
+            $ChocolateyInstallString += "--version $Version "
+        }
+        if ($PackageParameters) {
+            $ChocolateyInstallString += "-packageParameters `"$PackageParameters`" "
+        }
+        if ($Source) {
+            $ChocolateyInstallString += "--source `"$Source`" "
+        }
+        if ($Force) {
+            $ChocolateyInstallString += "-f"
+        }
 
-    $ChocolateyInstallScriptBlock = [ScriptBlock]::Create($ChocolateyInstallString)
+        $ChocolateyInstallScriptBlock = [ScriptBlock]::Create($ChocolateyInstallString)
 
-    Write-Verbose "Executing `"$ChocolateyInstallString`" on $ComputerName"
+        Write-Verbose "Executing `"$ChocolateyInstallString`" on $ComputerName"
     
-    Invoke-Command -ComputerName $ComputerName -ScriptBlock $ChocolateyInstallScriptBlock
+        Invoke-Command -ComputerName $ComputerName -ScriptBlock $ChocolateyInstallScriptBlock
+    }
 }
 
 function Uninstall-TervisChocolateyPackage {
