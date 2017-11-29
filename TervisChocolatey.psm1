@@ -228,6 +228,7 @@ autohotkey
 greenshot
 office365-2016-deployment-tool
 adobereader
+TeamViewer12MSI
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         ) +
         @(New-TervisChocolateyPackageConfigPackage -id jre8 -packageParameters "/exclude:64")
@@ -238,6 +239,7 @@ adobereader
     ChocolateyPackageConfigPackages =  @(
 @"
 paint.net
+TeamViewer12MSI
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
     )
 },
@@ -269,6 +271,7 @@ speedcrunch
 sql-server-management-studio
 sumatrapdf
 sysinternals
+TeamViewer
 todoist
 vlc
 windirstat
