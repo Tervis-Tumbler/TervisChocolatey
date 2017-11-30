@@ -564,6 +564,16 @@ google-cloud-print-connector
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         )
     )
+},
+[PSCustomObject][Ordered] @{
+    Name = "ShipStation"
+    ChocolateyPackageConfigPackages = @(
+        (
+@"
+javaruntime
+"@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
+        )
+    )
 }
 
 function Get-ChocolateyPackageGroup {
