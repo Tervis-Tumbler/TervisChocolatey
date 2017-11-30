@@ -570,9 +570,16 @@ google-cloud-print-connector
     ChocolateyPackageConfigPackages = @(
         (
 @"
-javaruntime
+CiscoJabber
+googlechrome
+firefox
+greenshot
+Office2016VL
+adobereader
+TeamViewer12MSI
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
-        )
+        ) +
+        @(New-TervisChocolateyPackageConfigPackage -id jre8 -packageParameters "/exclude:64")
     )
 }
 
