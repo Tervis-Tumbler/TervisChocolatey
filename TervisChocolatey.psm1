@@ -1,4 +1,4 @@
-﻿#Requires -modules WebServicesPowerShellProxyBuilder,PasswordstatePowershell
+﻿#Requires -modules WebServicesPowerShellProxyBuilder,TervisPasswordstatePowershell
 
 function New-TervisChocolateyPackage {
     param (
@@ -229,6 +229,7 @@ greenshot
 office365-2016-deployment-tool
 adobereader
 TeamViewer12MSI
+microsoft-teams
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         ) +
         @(New-TervisChocolateyPackageConfigPackage -id jre8 -packageParameters "/exclude:64")
