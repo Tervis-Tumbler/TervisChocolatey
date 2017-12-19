@@ -466,7 +466,7 @@ FoxitReader
 [PSCustomObject][Ordered] @{
     Name = "DataLoadClassic"
     ChocolateyPackageConfigPackages =  @(
-        @(New-TervisChocolateyPackageConfigPackage -id javaruntime -version 7.0.60)
+        @(New-TervisChocolateyPackageConfigPackage -id jre8 -version 8.0.151)
     )
 },
 [PSCustomObject][Ordered] @{
@@ -488,7 +488,7 @@ FoxitReader
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
     ) + (
         @(
-            (New-TervisChocolateyPackageConfigPackage -id javaruntime -version 7.0.60),
+            (New-TervisChocolateyPackageConfigPackage -id jre8 -version 8.0.151),
             (New-TervisChocolateyPackageConfigPackage -id firefox -version 24.0),
             (New-TervisChocolateyPackageConfigPackage -id ghostscript.app -version 9.20),
             (New-TervisChocolateyPackageConfigPackage -id gimp -version 2.8.20)
