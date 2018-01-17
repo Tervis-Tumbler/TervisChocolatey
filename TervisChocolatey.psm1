@@ -608,6 +608,20 @@ TeamViewer12MSI
         ) +
         @(New-TervisChocolateyPackageConfigPackage -id jre8 -packageParameters "/exclude:64")
     )
+},
+[PSCustomObject][Ordered] @{
+    Name = "StoresBackOffice"
+    ChocolateyPackageConfigPackages = @(
+        (
+@"
+googlechrome
+firefox
+greenshot
+Office2016VL
+javaruntime
+"@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
+        )
+    )
 }
 
 function Get-ChocolateyPackageGroup {
