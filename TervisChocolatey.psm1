@@ -159,42 +159,44 @@ function Uninstall-TervisChocolateyPackage {
 function Install-TervisChocolateyPackages {
     [CmdletBinding()]
     param (
-        $ComputerName,
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]$ComputerName,
         $Credential = [System.Management.Automation.PSCredential]::Empty,
         $ChocolateyPackageGroupNames
     )
-    $ChocolateyPackageGroups = $ChocolateyPackageGroupNames | Get-ChocolateyPackageGroup
+    process {
+        $ChocolateyPackageGroups = $ChocolateyPackageGroupNames | Get-ChocolateyPackageGroup
     
-    $ChocolateyPackagesIncludedMoreThanOnce = $ChocolateyPackageGroups.ChocolateyPackageConfigPackages | 
-        group id | 
-        where count -GT 1 | 
-        select -ExpandProperty group
+        $ChocolateyPackagesIncludedMoreThanOnce = $ChocolateyPackageGroups.ChocolateyPackageConfigPackages | 
+            group id | 
+            where count -GT 1 | 
+            select -ExpandProperty group
 
-    if ($ChocolateyPackagesIncludedMoreThanOnce) {        
-        throw "There are chocolatey packages included more than once: $($ChocolateyPackagesIncludedMoreThanOnce.id)"
-    }
-
-    $ChocolateyPackageConfig = New-TervisChocolateyPackageConfig -PackageConfigPackages $ChocolateyPackageGroups.ChocolateyPackageConfigPackages
-
-    Invoke-Command -ComputerName $ComputerName -Credential $Credential -ArgumentList $ChocolateyPackageConfig.OuterXml -ScriptBlock {
-        param (
-            $PackagConfigFileContent
-        )
-        $locations = 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment'
-
-        $locations | ForEach-Object {   
-            $k = Get-Item $_
-            $k.GetValueNames() | ForEach-Object {
-                $name  = $_
-                $value = $k.GetValue($_)
-                Set-Item -Path Env:\$name -Value $value
-            }
+        if ($ChocolateyPackagesIncludedMoreThanOnce) {        
+            throw "There are chocolatey packages included more than once: $($ChocolateyPackagesIncludedMoreThanOnce.id)"
         }
 
-        $PackageConfigFile = "$env:USERPROFILE\PackageConfigFile.config"
-        $PackagConfigFileContent | out-file $PackageConfigFile
+        $ChocolateyPackageConfig = New-TervisChocolateyPackageConfig -PackageConfigPackages $ChocolateyPackageGroups.ChocolateyPackageConfigPackages
 
-        choco install $PackageConfigFile -y
+        Invoke-Command -ComputerName $ComputerName -Credential $Credential -ArgumentList $ChocolateyPackageConfig.OuterXml -ScriptBlock {
+            param (
+                $PackagConfigFileContent
+            )
+            $locations = 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment'
+
+            $locations | ForEach-Object {   
+                $k = Get-Item $_
+                $k.GetValueNames() | ForEach-Object {
+                    $name  = $_
+                    $value = $k.GetValue($_)
+                    Set-Item -Path Env:\$name -Value $value
+                }
+            }
+
+            $PackageConfigFile = "$env:USERPROFILE\PackageConfigFile.config"
+            $PackagConfigFileContent | out-file $PackageConfigFile
+
+            choco install $PackageConfigFile -y
+        }
     }
 }
 
