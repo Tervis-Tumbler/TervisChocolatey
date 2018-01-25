@@ -483,7 +483,7 @@ Office2016VL
     Name = "EBSRemoteApp"
     ChocolateyPackageConfigPackages =  @(
 @"
-Office2016VL
+Office2010VL
 FoxitReader
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
     ) + (
@@ -621,6 +621,27 @@ Office2016VL
 javaruntime
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         )
+    )
+},
+[PSCustomObject][Ordered] @{
+    Name = "SharedOfficeEndpoint"
+    ChocolateyPackageConfigPackages = @(
+        (
+@"
+CiscoJabber
+CiscoAnyConnect
+camunda-modeler
+googlechrome
+firefox
+autohotkey
+greenshot
+office2016vl
+adobereader
+TeamViewer12MSI
+microsoft-teams
+"@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
+        ) +
+        @(New-TervisChocolateyPackageConfigPackage -id jre8 -packageParameters "/exclude:64")
     )
 }
 
