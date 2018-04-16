@@ -657,6 +657,8 @@ sql-server-management-studio
 putty
 rdm
 sqlanywhereclient
+git
+github-desktop
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         )
     )
