@@ -641,6 +641,25 @@ microsoft-teams
         ) +
         @(New-TervisChocolateyPackageConfigPackage -id jre8 -packageParameters "/exclude:64")
     )
+},
+[PSCustomObject][Ordered] @{
+    Name = "ITToolbox"
+    ChocolateyPackageConfigPackages = @(
+        (
+@"
+googlechrome
+firefox
+Office2016VL
+javaruntime
+visualstudiocode
+angryip
+sql-server-management-studio
+putty
+rdm
+sqlanywhereclient
+"@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
+        )
+    )
 }
 
 function Get-ChocolateyPackageGroup {
