@@ -231,6 +231,7 @@ greenshot
 office365-2016-deployment-tool
 adobereader
 microsoft-teams
+TervisTeamViewerHost
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         ) +
         @(New-TervisChocolateyPackageConfigPackage -id jre8 -packageParameters "/exclude:64")
@@ -527,6 +528,7 @@ Office2016VL
         (
 @"
 autohotkey
+TervisTeamViewerHost
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         )
     )
@@ -537,6 +539,7 @@ autohotkey
         (
 @"
 autohotkey
+TervisTeamViewerHost
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         )
     )
@@ -557,6 +560,7 @@ silverlight
         (
 @"
 adobereader
+TervisTeamViewerHost
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         )
     )
@@ -603,6 +607,7 @@ firefox
 greenshot
 Office2016VL
 adobereader
+TervisTeamViewerHost
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         ) +
         @(New-TervisChocolateyPackageConfigPackage -id jre8 -packageParameters "/exclude:64")
@@ -618,6 +623,7 @@ firefox
 greenshot
 Office2016VL
 javaruntime
+TervisTeamViewerHost
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         )
     )
@@ -637,6 +643,7 @@ greenshot
 office2016vl
 adobereader
 microsoft-teams
+TervisTeamViewerHost
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         ) +
         @(New-TervisChocolateyPackageConfigPackage -id jre8 -packageParameters "/exclude:64")
@@ -659,6 +666,16 @@ rdm
 sqlanywhereclient
 git
 github-desktop
+"@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
+        )
+    )
+},
+[PSCustomObject][Ordered] @{
+    Name = "IQ2Welder"
+    ChocolateyPackageConfigPackages = @(
+        (
+@"
+TervisTeamViewerHost
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         )
     )
