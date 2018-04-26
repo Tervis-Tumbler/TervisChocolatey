@@ -675,7 +675,7 @@ github-desktop
     ChocolateyPackageConfigPackages = @(
         (
 @"
-TervisTeamViewerHost
+TervisTeamViewerHostEngineering
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         )
     )
