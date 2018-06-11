@@ -1,6 +1,4 @@
-﻿#Requires -modules WebServicesPowerShellProxyBuilder,TervisPasswordstatePowershell
-
-function New-TervisChocolateyPackage {
+﻿function New-TervisChocolateyPackage {
     param (
         $PowerShellModulesPath = ($ENV:PSModulepath -split ";")[0],
         [Parameter(Mandatory)]$PackageName,
