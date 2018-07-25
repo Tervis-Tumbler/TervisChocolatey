@@ -79,16 +79,25 @@ function Install-TervisChocolatey {
     [CmdletBinding()]
     param (
         [Parameter(ValueFromPipelineByPropertyName)]$ComputerName,
-        $Credential = [System.Management.Automation.PSCredential]::Empty
+        [Parameter(switch)]$Force,
+        $Credential = [System.Management.Automation.PSCredential]::Empty,
     )
     process {
         Write-Verbose "Installing Chocolatey"
 
-        Invoke-Command -ComputerName $ComputerName -Credential $Credential -ScriptBlock {
-            try { choco } catch {
-                cmd /c "@powershell -NoProfile -ExecutionPolicy Bypass -Command `"iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))`" && SET `"PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin`""
+        if ($Force) {
+            $InstallScript = {
+                    cmd /c "@powershell -NoProfile -ExecutionPolicy Bypass -Command `"iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))`" && SET `"PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin`""
+            }
+        } else {
+            $InstallScript = {
+                try { choco } catch {
+                    cmd /c "@powershell -NoProfile -ExecutionPolicy Bypass -Command `"iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))`" && SET `"PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin`""
+                }
             }
         }
+
+        Invoke-Command -ComputerName $ComputerName -Credential $Credential -ScriptBlock $InstallScript
         Invoke-Command -ComputerName $ComputerName -Credential $Credential -ScriptBlock {
             $locations = 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment'
 
