@@ -79,7 +79,7 @@ function Install-TervisChocolatey {
     [CmdletBinding()]
     param (
         [Parameter(ValueFromPipelineByPropertyName)]$ComputerName,
-        [Parameter(switch)]$Force,
+        [switch]$Force,
         $Credential = [System.Management.Automation.PSCredential]::Empty
     )
     process {
