@@ -80,7 +80,7 @@ function Install-TervisChocolatey {
     param (
         [Parameter(ValueFromPipelineByPropertyName)]$ComputerName,
         [Parameter(switch)]$Force,
-        $Credential = [System.Management.Automation.PSCredential]::Empty,
+        $Credential = [System.Management.Automation.PSCredential]::Empty
     )
     process {
         Write-Verbose "Installing Chocolatey"
