@@ -83,7 +83,7 @@ function Install-TervisChocolatey {
         $Credential = [System.Management.Automation.PSCredential]::Empty
     )
     process {
-        Write-Verbose "Installing Chocolatey"
+        Write-Verbose "$ComputerName - Installing Chocolatey"
 
         if ($Force) {
             $InstallScript = {
