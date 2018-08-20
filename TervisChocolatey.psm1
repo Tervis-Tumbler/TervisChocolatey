@@ -228,7 +228,6 @@ $ChocolateyPackageGroups = [PSCustomObject][Ordered] @{
     ChocolateyPackageConfigPackages = @(
         (
 @"
-CiscoJabber
 CiscoAnyConnect
 camunda-modeler
 googlechrome
@@ -259,7 +258,6 @@ paint.net
 @"
 7zip
 baretail
-evernote
 everything
 fiddler4
 filezilla
@@ -273,9 +271,7 @@ paint.net
 pester
 putty
 rdm
-rsat
 rufus
-skype
 speedcrunch
 sql-server-management-studio
 sumatrapdf
@@ -286,59 +282,6 @@ visualstudiocode
 windirstat
 winmerge
 wireshark
-"@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
-        )
-    )
-},
-[PSCustomObject][Ordered] @{
-    Name = "IT Chris"
-    ChocolateyPackageConfigPackages = @(
-        (
-@"
-anki
-eclipse
-hmailserver
-ilspy
-keepass
-kindle
-pal
-scansnapmanager
-spf13-vim
-testdisk-photorec
-usbview
-ussf
-windbg
-todoist-outlook
-"@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
-        )
-    )
-},
-[PSCustomObject][Ordered] @{
-    Name = "Kjono"
-    ChocolateyPackageConfigPackages = @(
-        (
-@"
-eclipse
-keepass
-windbg
-windirstat
-winmerge
-sysinternals
-sql-server-management-studio
-skype
-putty
-rsat
-nmap
-github
-filezilla
-7zip
-evernote
-fiddler4
-greenshot
-office365-2016-deployment-tool
-CiscoJabber
-CiscoAnyConnect
-googlechrome
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         )
     )
@@ -608,7 +551,6 @@ google-cloud-print-connector
     ChocolateyPackageConfigPackages = @(
         (
 @"
-CiscoJabber
 googlechrome
 firefox
 greenshot
@@ -640,7 +582,6 @@ TervisTeamViewerHost
     ChocolateyPackageConfigPackages = @(
         (
 @"
-CiscoJabber
 CiscoAnyConnect
 camunda-modeler
 googlechrome
