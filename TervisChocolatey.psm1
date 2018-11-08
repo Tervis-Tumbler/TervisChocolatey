@@ -234,7 +234,7 @@ googlechrome
 firefox
 autohotkey
 greenshot
-office365-2016-deployment-tool
+office365-deployment-tool
 adobereader
 microsoft-teams
 TervisTeamViewerHost
