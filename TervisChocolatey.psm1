@@ -588,13 +588,15 @@ googlechrome
 firefox
 autohotkey
 greenshot
-office2016vl
 adobereader
 microsoft-teams
 TervisTeamViewerHost
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         ) +
-        @(New-TervisChocolateyPackageConfigPackage -id jre8 -packageParameters "/exclude:64")
+        @(
+            (New-TervisChocolateyPackageConfigPackage -id jre8 -packageParameters "/exclude:64"),
+            (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -packageParameters "/VolumeLicense")
+        )
     )
 },
 [PSCustomObject][Ordered] @{
