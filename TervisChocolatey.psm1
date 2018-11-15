@@ -372,8 +372,9 @@ adobereader
 googlechrome
 firefox
 adobereader
-Office2016VL
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
+        ) + @(
+            (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -packageParameters "/VolumeLicense /Shared")
         )
     )
 },
@@ -397,8 +398,9 @@ Putty
 googlechrome
 firefox
 DotNet-4.6.2
-Office2016VL
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
+    ) + @(
+        (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -packageParameters "/VolumeLicense /Shared")
     )
 },
 [PSCustomObject][Ordered] @{
@@ -426,8 +428,9 @@ FoxitReader
 @"
 googlechrome
 firefox
-Office2016VL
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
+    ) + @(
+        (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -packageParameters "/VolumeLicense /Shared")
     )
 },
 [PSCustomObject][Ordered] @{
@@ -451,26 +454,21 @@ FoxitReader
     ChocolateyPackageConfigPackages =  @(
 @"
 flashplayerplugin
-Office2016VL
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
     ) + (
         @(
             (New-TervisChocolateyPackageConfigPackage -id javaruntime -version 7.0.60),
-            (New-TervisChocolateyPackageConfigPackage -id firefox -version 24.0)
+            (New-TervisChocolateyPackageConfigPackage -id firefox -version 24.0),
+            (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -packageParameters "/VolumeLicense /Shared")
         )
     )
 },
 [PSCustomObject][Ordered] @{
     Name = "EBSDiscovererRemoteApp"
-    ChocolateyPackageConfigPackages =  @(
-@"
-Office2016VL
-"@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
-    ) + (
-        @(
-            (New-TervisChocolateyPackageConfigPackage -id javaruntime -version 7.0.60)
+    ChocolateyPackageConfigPackages = @(
+            (New-TervisChocolateyPackageConfigPackage -id javaruntime -version 7.0.60),
+            (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -packageParameters "/VolumeLicense /Shared")
         )
-    )
 },
 [PSCustomObject][Ordered] @{
     Name = "FillRoomSurface"
@@ -554,12 +552,14 @@ google-cloud-print-connector
 googlechrome
 firefox
 greenshot
-Office2016VL
 adobereader
 TervisTeamViewerHost
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         ) +
-        @(New-TervisChocolateyPackageConfigPackage -id jre8 -packageParameters "/exclude:64")
+        @(
+            (New-TervisChocolateyPackageConfigPackage -id jre8 -packageParameters "/exclude:64"),
+            (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -packageParameters "/VolumeLicense")
+        )
     )
 },
 [PSCustomObject][Ordered] @{
@@ -570,10 +570,11 @@ TervisTeamViewerHost
 googlechrome
 firefox
 greenshot
-Office2016VL
 javaruntime
 TervisTeamViewerHost
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
+        ) + @(
+            (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -packageParameters "/VolumeLicense")
         )
     )
 },
@@ -606,7 +607,6 @@ TervisTeamViewerHost
 @"
 googlechrome
 firefox
-Office2016VL
 javaruntime
 visualstudiocode
 angryip
@@ -617,6 +617,8 @@ sqlanywhereclient
 git
 github-desktop
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
+        ) + @(
+            (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -packageParameters "/VolumeLicense /Shared")
         )
     )
 },
