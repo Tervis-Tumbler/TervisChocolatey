@@ -240,7 +240,7 @@ microsoft-teams
 TervisTeamViewerHost
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         ) +
-        @(New-TervisChocolateyPackageConfigPackage -id jre8 -packageParameters "/exclude:64")
+        @(New-TervisChocolateyPackageConfigPackage -id jre8 -version 8.0.191.20181114 -packageParameters "/exclude:64")
     )
 },
 [PSCustomObject][Ordered] @{
@@ -338,7 +338,7 @@ vcredist2010
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         ) + @(
         (New-TervisChocolateyPackageConfigPackage -id sqlanywhereclient -version 12.0.1),
-        (New-TervisChocolateyPackageConfigPackage -id jre8 -packageParameters "/exclude:64" )
+        (New-TervisChocolateyPackageConfigPackage -id jre8 -version 8.0.191.20181114 -packageParameters "/exclude:64" )
     )
 },
 [PSCustomObject][Ordered] @{
@@ -419,7 +419,7 @@ FoxitReader
 [PSCustomObject][Ordered] @{
     Name = "DataLoadClassic"
     ChocolateyPackageConfigPackages =  @(
-        @(New-TervisChocolateyPackageConfigPackage -id jre8 -version 8.0.151)
+        @(New-TervisChocolateyPackageConfigPackage -id jre8 -version 8.0.191.20181114)
     )
 },
 [PSCustomObject][Ordered] @{
@@ -442,7 +442,7 @@ FoxitReader
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
     ) + (
         @(
-            (New-TervisChocolateyPackageConfigPackage -id jre8 -version 8.0.151),
+            (New-TervisChocolateyPackageConfigPackage -id jre8 -version 8.0.191.20181114),
             (New-TervisChocolateyPackageConfigPackage -id firefox -version 24.0),
             (New-TervisChocolateyPackageConfigPackage -id ghostscript.app -version 9.20),
             (New-TervisChocolateyPackageConfigPackage -id gimp -version 2.8.20)
@@ -557,7 +557,7 @@ TervisTeamViewerHost
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         ) +
         @(
-            (New-TervisChocolateyPackageConfigPackage -id jre8 -packageParameters "/exclude:64"),
+            (New-TervisChocolateyPackageConfigPackage -id jre8 -version 8.0.191.20181114 -packageParameters "/exclude:64"),
             (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -packageParameters "/VolumeLicense")
         )
     )
@@ -595,7 +595,7 @@ TervisTeamViewerHost
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         ) +
         @(
-            (New-TervisChocolateyPackageConfigPackage -id jre8 -packageParameters "/exclude:64"),
+            (New-TervisChocolateyPackageConfigPackage -id jre8 -version 8.0.191.20181114 -packageParameters "/exclude:64"),
             (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -packageParameters "/VolumeLicense")
         )
     )
