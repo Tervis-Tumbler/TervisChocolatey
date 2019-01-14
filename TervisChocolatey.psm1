@@ -238,6 +238,7 @@ office365-deployment-tool
 adobereader
 microsoft-teams
 TervisTeamViewerHost
+sql2012.nativeclient
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         ) +
         @(New-TervisChocolateyPackageConfigPackage -id jre8 -version 8.0.191.20181114 -packageParameters "/exclude:64")
@@ -554,6 +555,7 @@ firefox
 greenshot
 adobereader
 TervisTeamViewerHost
+sql2012.nativeclient
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         ) +
         @(
@@ -592,6 +594,7 @@ greenshot
 adobereader
 microsoft-teams
 TervisTeamViewerHost
+sql2012.nativeclient
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         ) +
         @(
