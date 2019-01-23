@@ -409,4 +409,14 @@ TervisTeamViewerHostEngineering
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         )
     )
+},
+[PSCustomObject][Ordered] @{
+    Name = "Exchange"
+    ChocolateyPackageConfigPackages = @(
+        (
+@"
+vcredist2013
+"@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
+        )
+    )
 }
