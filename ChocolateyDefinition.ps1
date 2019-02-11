@@ -423,6 +423,12 @@ vcredist2013
 [PSCustomObject][Ordered] @{
     Name = "ExcelTask"
     ChocolateyPackageConfigPackages = @(
-            (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -packageParameters "/VolumeLicense /Shared")
+        (
+@"
+git
+"@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
+        ) + @(
+            (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -packageParameters "/VolumeLicense")
         )
+    )
 }
