@@ -425,4 +425,14 @@ vcredist2013
     ChocolateyPackageConfigPackages = @(
             (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -packageParameters "/VolumeLicense /Shared")
         )
+},
+[PSCustomObject][Ordered] @{
+    Name = "InDesign"
+    ChocolateyPackageConfigPackages = @(
+        (
+@"
+nssm
+"@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
+        )
+    )
 }
