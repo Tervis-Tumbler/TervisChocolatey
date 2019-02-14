@@ -422,9 +422,15 @@ vcredist2013
 },
 [PSCustomObject][Ordered] @{
     Name = "ExcelTask"
-    ChocolateyPackageConfigPackages = @(
+    ChocolateyPackageConfigPackages =  @(
+@"
+git
+"@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
+    ) + (
+        @(
             (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -packageParameters "/VolumeLicense /Shared")
         )
+    )
 },
 [PSCustomObject][Ordered] @{
     Name = "InDesign"

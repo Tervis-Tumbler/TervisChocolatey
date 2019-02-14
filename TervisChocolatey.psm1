@@ -1,7 +1,7 @@
 ﻿$ModulePath = if ($PSScriptRoot) {
     $PSScriptRoot
 } else {
-    (Get-Module -ListAvailable TervisApplication).ModuleBase
+    (Get-Module -ListAvailable TervisChocolatey).ModuleBase
 }
 . $ModulePath\ChocolateyDefinition.ps1
 
