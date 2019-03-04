@@ -3,17 +3,16 @@ $ChocolateyPackageGroups = [PSCustomObject][Ordered] @{
     ChocolateyPackageConfigPackages = @(
         (
 @"
+TervisTeamViewerHost
+office365-deployment-tool
 CiscoAnyConnect
-camunda-modeler
 googlechrome
 firefox
-autohotkey
 greenshot
-office365-deployment-tool
-adobereader
-microsoft-teams
-TervisTeamViewerHost
+autohotkey
 sql2012.nativeclient
+camunda-modeler
+adobereader
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         ) +
         @(New-TervisChocolateyPackageConfigPackage -id jre8 -version 8.0.191.20181114 -packageParameters "/exclude:64")
@@ -360,16 +359,15 @@ TervisTeamViewerHost
     ChocolateyPackageConfigPackages = @(
         (
 @"
+TervisTeamViewerHost
 CiscoAnyConnect
-camunda-modeler
 googlechrome
 firefox
 autohotkey
 greenshot
-adobereader
-microsoft-teams
-TervisTeamViewerHost
+camunda-modeler
 sql2012.nativeclient
+adobereader
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         ) +
         @(
