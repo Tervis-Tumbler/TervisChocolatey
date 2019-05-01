@@ -31,13 +31,14 @@ paint.net
     ChocolateyPackageConfigPackages = @(
         (
 @"
+tervisteamviewerhost
 7zip
 baretail
 everything
 fiddler4
 filezilla
 gimp
-github
+github-desktop
 imgburn
 macrocreator
 nmap
@@ -49,16 +50,16 @@ rdm
 rufus
 speedcrunch
 sql-server-management-studio
-sumatrapdf
 sysinternals
-todoist
 vlc
 visualstudiocode
 windirstat
 winmerge
 wireshark
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
-        )
+        ) +
+        @(New-TervisChocolateyPackageConfigPackage -id jre8 -version 8.0.191.20181114 -packageParameters "/exclude:64"),
+        @(New-TervisChocolateyPackageConfigPackage -id "office365-deployment-tool" -packageParameters "/64bit")
     )
 },
 [PSCustomObject][Ordered] @{
