@@ -437,6 +437,8 @@ git
         (
 @"
 nssm
+git
+nodejs
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         )
     )
