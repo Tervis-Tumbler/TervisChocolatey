@@ -348,7 +348,22 @@ sql2012.nativeclient
 googlechrome
 firefox
 greenshot
-javaruntime
+TervisTeamViewerHost
+"@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
+        ) + @(
+            (New-TervisChocolateyPackageConfigPackage -id jre8 -version 8.0.191.20181114 -packageParameters "/exclude:64"),
+            (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -packageParameters "/VolumeLicense")
+        )
+    )
+},
+[PSCustomObject][Ordered] @{
+    Name = "StoresRegister"
+    ChocolateyPackageConfigPackages = @(
+        (
+@"
+googlechrome
+firefox
+greenshot
 TervisTeamViewerHost
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         ) + @(
@@ -385,7 +400,6 @@ adobereader
 @"
 googlechrome
 firefox
-javaruntime
 visualstudiocode
 angryip
 sql-server-management-studio
@@ -396,6 +410,7 @@ git
 github-desktop
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         ) + @(
+            (New-TervisChocolateyPackageConfigPackage -id jre8 -version 8.0.191.20181114 -packageParameters "/exclude:64"),
             (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -packageParameters "/VolumeLicense /Shared")
         )
     )
