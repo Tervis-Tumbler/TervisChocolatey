@@ -264,7 +264,7 @@ TervisTeamViewerHost
 @"
 autohotkey
 TervisTeamViewerHost
-foxitreader
+adobereader
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         )
     )
