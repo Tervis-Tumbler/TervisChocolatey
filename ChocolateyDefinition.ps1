@@ -458,4 +458,16 @@ nodejs
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         )
     )
+},
+[PSCustomObject][Ordered] @{
+    Name = "ShopifyInterface"
+    ChocolateyPackageConfigPackages = @(
+        (
+@"
+git
+git-credential-manager-for-windows
+nodejs
+"@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
+        )
+    )
 }
