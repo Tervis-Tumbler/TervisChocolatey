@@ -3,9 +3,6 @@ $ChocolateyPackageGroups = [PSCustomObject][Ordered] @{
     ChocolateyPackageConfigPackages = @(
         (
 @"
-TervisTeamViewerHost
-office365-deployment-tool
-CiscoAnyConnect
 googlechrome
 firefox
 greenshot
@@ -14,8 +11,12 @@ sql2012.nativeclient
 camunda-modeler
 adobereader
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
-        ) +
-        @(New-TervisChocolateyPackageConfigPackage -id jre8 -version 8.0.191.20181114 -packageParameters "/exclude:64")
+        ) + @(
+            (New-TervisChocolateyPackageConfigPackage -id jre8 -version 8.0.191.20181114 -packageParameters "/exclude:64")
+            (New-TervisChocolateyPackageConfigPackage -id CiscoAnyConnect -source "C:\ProgramData\Tervis\ChocolateyPackage"),
+            (New-TervisChocolateyPackageConfigPackage -id TervisTeamViewerHost -source "C:\ProgramData\Tervis\ChocolateyPackage"),
+            (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -source "C:\ProgramData\Tervis\ChocolateyPackage")
+        )
     )
 },
 [PSCustomObject][Ordered] @{
@@ -31,7 +32,6 @@ paint.net
     ChocolateyPackageConfigPackages = @(
         (
 @"
-tervisteamviewerhost
 7zip
 baretail
 everything
@@ -57,9 +57,11 @@ windirstat
 winmerge
 wireshark
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
-        ) +
-        @(New-TervisChocolateyPackageConfigPackage -id jre8 -version 8.0.191.20181114 -packageParameters "/exclude:64"),
-        @(New-TervisChocolateyPackageConfigPackage -id "office365-deployment-tool" -packageParameters "/64bit")
+        ) + @(
+            (New-TervisChocolateyPackageConfigPackage -id jre8 -version 8.0.191.20181114 -packageParameters "/exclude:64"),
+            (New-TervisChocolateyPackageConfigPackage -id CiscoAnyConnect -source "C:\ProgramData\Tervis\ChocolateyPackage"),
+            (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -packageParameters "/64bit" -source "C:\ProgramData\Tervis\ChocolateyPackage")
+        )
     )
 },
 [PSCustomObject][Ordered] @{
@@ -150,7 +152,7 @@ firefox
 adobereader
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         ) + @(
-            (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -packageParameters "/VolumeLicense /Shared")
+            (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -packageParameters "/VolumeLicense /Shared" -source "C:\ProgramData\Tervis\ChocolateyPackage")
         )
     )
 },
@@ -176,7 +178,7 @@ firefox
 DotNet-4.6.2
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
     ) + @(
-        (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -packageParameters "/VolumeLicense /Shared")
+        (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -packageParameters "/VolumeLicense /Shared" -source "C:\ProgramData\Tervis\ChocolateyPackage")
     )
 },
 [PSCustomObject][Ordered] @{
@@ -206,7 +208,7 @@ googlechrome
 firefox
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
     ) + @(
-        (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -packageParameters "/VolumeLicense /Shared")
+        (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -packageParameters "/VolumeLicense /Shared" -source "C:\ProgramData\Tervis\ChocolateyPackage")
     )
 },
 [PSCustomObject][Ordered] @{
@@ -235,7 +237,7 @@ flashplayerplugin
         @(
             (New-TervisChocolateyPackageConfigPackage -id javaruntime -version 7.0.60),
             (New-TervisChocolateyPackageConfigPackage -id firefox -version 24.0),
-            (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -packageParameters "/VolumeLicense /Shared")
+            (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -packageParameters "/VolumeLicense /Shared" -source "C:\ProgramData\Tervis\ChocolateyPackage")
         )
     )
 },
@@ -243,17 +245,20 @@ flashplayerplugin
     Name = "EBSDiscovererRemoteApp"
     ChocolateyPackageConfigPackages = @(
             (New-TervisChocolateyPackageConfigPackage -id javaruntime -version 7.0.60),
-            (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -packageParameters "/VolumeLicense /Shared")
+            (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -packageParameters "/VolumeLicense /Shared" -source "C:\ProgramData\Tervis\ChocolateyPackage")
         )
 },
 [PSCustomObject][Ordered] @{
     Name = "FillRoomSurface"
     ChocolateyPackageConfigPackages = @(
-        (
+        @(
 @"
 autohotkey
-TervisTeamViewerHost
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
+        ) + (
+            @(
+                (New-TervisChocolateyPackageConfigPackage -id TervisTeamViewerHost -source "C:\ProgramData\Tervis\ChocolateyPackage")
+            )
         )
     )
 },
@@ -263,9 +268,12 @@ TervisTeamViewerHost
         (
 @"
 autohotkey
-TervisTeamViewerHost
 adobereader
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
+        ) + (
+            @(
+                (New-TervisChocolateyPackageConfigPackage -id TervisTeamViewerHost -source "C:\ProgramData\Tervis\ChocolateyPackage")
+            )
         )
     )
 },
@@ -282,14 +290,17 @@ silverlight
 [PSCustomObject][Ordered] @{
     Name = "MESStation"
     ChocolateyPackageConfigPackages = @(
-        (
+        @(
 @"
 adobereader
-TervisTeamViewerHost
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
+        ) + (
+            @(
+                (New-TervisChocolateyPackageConfigPackage -id TervisTeamViewerHost -source "C:\ProgramData\Tervis\ChocolateyPackage")
+            )
         )
     )
-},
+}
 [PSCustomObject][Ordered] @{
     Name = "SCCM2016"
     ChocolateyPackageConfigPackages = @(
@@ -304,17 +315,17 @@ windows-adk-all
 [PSCustomObject][Ordered] @{
     Name = "UnifiController"
     ChocolateyPackageConfigPackages = @(
-        (
+        @(
 @"
 ubiquiti-unifi-controller
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         )
     )
-},
+}
 [PSCustomObject][Ordered] @{
     Name = "PrintServer"
     ChocolateyPackageConfigPackages = @(
-        (
+        @(
 @"
 google-cloud-print-connector
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
@@ -330,13 +341,13 @@ googlechrome
 firefox
 greenshot
 adobereader
-TervisTeamViewerHost
 sql2012.nativeclient
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         ) +
         @(
             (New-TervisChocolateyPackageConfigPackage -id jre8 -version 8.0.191.20181114 -packageParameters "/exclude:64"),
-            (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -packageParameters "/VolumeLicense")
+            (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -packageParameters "/VolumeLicense" -source "C:\ProgramData\Tervis\ChocolateyPackage"),
+            (New-TervisChocolateyPackageConfigPackage -id TervisTeamViewerHost -source "C:\ProgramData\Tervis\ChocolateyPackage")
         )
     )
 },
@@ -348,11 +359,11 @@ sql2012.nativeclient
 googlechrome
 firefox
 greenshot
-TervisTeamViewerHost
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         ) + @(
             (New-TervisChocolateyPackageConfigPackage -id jre8 -version 8.0.191.20181114 -packageParameters "/exclude:64"),
-            (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -packageParameters "/VolumeLicense")
+            (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -packageParameters "/VolumeLicense" -source "C:\ProgramData\Tervis\ChocolateyPackage"),
+            (New-TervisChocolateyPackageConfigPackage -id TervisTeamViewerHost -source "C:\ProgramData\Tervis\ChocolateyPackage")
         )
     )
 },
@@ -364,10 +375,10 @@ TervisTeamViewerHost
 googlechrome
 firefox
 greenshot
-TervisTeamViewerHost
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         ) + @(
-            (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -packageParameters "/VolumeLicense")
+            (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -packageParameters "/VolumeLicense" -source "C:\ProgramData\Tervis\ChocolateyPackage"),
+            (New-TervisChocolateyPackageConfigPackage -id TervisTeamViewerHost -source "C:\ProgramData\Tervis\ChocolateyPackage")
         )
     )
 },
@@ -376,7 +387,6 @@ TervisTeamViewerHost
     ChocolateyPackageConfigPackages = @(
         (
 @"
-TervisTeamViewerHost
 CiscoAnyConnect
 googlechrome
 firefox
@@ -389,7 +399,10 @@ adobereader
         ) +
         @(
             (New-TervisChocolateyPackageConfigPackage -id jre8 -version 8.0.191.20181114 -packageParameters "/exclude:64"),
-            (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -packageParameters "/VolumeLicense")
+            (New-TervisChocolateyPackageConfigPackage -id CiscoAnyConnect -source "C:\ProgramData\Tervis\ChocolateyPackage"),
+            (New-TervisChocolateyPackageConfigPackage -id TervisTeamViewerHost -source "C:\ProgramData\Tervis\ChocolateyPackage"),
+            (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -packageParameters "/VolumeLicense" -source "C:\ProgramData\Tervis\ChocolateyPackage")
+
         )
     )
 },
@@ -411,18 +424,14 @@ github-desktop
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         ) + @(
             (New-TervisChocolateyPackageConfigPackage -id jre8 -version 8.0.191.20181114 -packageParameters "/exclude:64"),
-            (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -packageParameters "/VolumeLicense /Shared")
+            (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -packageParameters "/VolumeLicense /Shared" -source "C:\ProgramData\Tervis\ChocolateyPackage")
         )
     )
 },
 [PSCustomObject][Ordered] @{
     Name = "IQ2Welder"
     ChocolateyPackageConfigPackages = @(
-        (
-@"
-TervisTeamViewerHostEngineering
-"@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
-        )
+        (New-TervisChocolateyPackageConfigPackage -id TervisTeamViewerHost -source "C:\ProgramData\Tervis\ChocolateyPackage")
     )
 },
 [PSCustomObject][Ordered] @{
@@ -438,12 +447,14 @@ vcredist2013
 [PSCustomObject][Ordered] @{
     Name = "ExcelTask"
     ChocolateyPackageConfigPackages =  @(
+        @(
 @"
 git
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
+        )
     ) + (
         @(
-            (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -packageParameters "/VolumeLicense /Shared")
+            (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -packageParameters "/VolumeLicense /Shared" -source "C:\ProgramData\Tervis\ChocolateyPackage")
         )
     )
 },

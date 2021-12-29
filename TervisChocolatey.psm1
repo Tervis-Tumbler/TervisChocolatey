@@ -191,6 +191,9 @@ function Install-TervisChocolateyPackages {
 
         $ChocolateyPackageConfig = New-TervisChocolateyPackageConfig -PackageConfigPackages $ChocolateyPackageGroups.ChocolateyPackageConfigPackages
 
+        $ChocolateyPackagesToCopyLocally = Select-TervisChocolateyPackagesWithTervisSource -ChocolateyPackageConfig $ChocolateyPackageConfig
+        Copy-TervisChocolateyLocalPackages -ComputerName $ComputerName -Packages $ChocolateyPackagesToCopyLocally
+
         Invoke-Command -ComputerName $ComputerName -Credential $Credential -ArgumentList $ChocolateyPackageConfig.OuterXml -ScriptBlock {
             param (
                 $PackagConfigFileContent
@@ -480,3 +483,34 @@ function Install-DotNet35OnWindows10 {
     .\Dism.exe /online /enable-feature /featurename:NetFX3 /All /Source:"$PathToWindows10USBInstallationSource\sources\sxs" /LimitAccess
 }
 #>
+
+function Select-TervisChocolateyPackagesWithTervisSource {
+    param (
+        $ChocolateyPackageConfig
+    )
+    
+    $ChocolateyLocalSourcePath = "C:\ProgramData\Tervis\ChocolateyPackage"
+    $ChocolateyPackageConfig.packages.package |
+        Where-Object source -eq $ChocolateyLocalSourcePath
+}
+
+function Copy-TervisChocolateyLocalPackages {
+    param (
+        $ComputerName,
+        $Packages
+    )
+
+    $DomainName = "$env:USERDNSDOMAIN"
+    $ChocolateyPackagesPath = "\\$DomainName\applications\Chocolatey"
+    $ChocolateyLocalSourcePath = "C:\ProgramData\Tervis\ChocolateyPackage"
+    $ChocolateyRemoteSourcePath = $ChocolateyLocalSourcePath | ConvertTo-RemotePath -ComputerName $ComputerName
+    
+    New-Item -Path $ChocolateyRemoteSourcePath -ItemType Directory -Force | Out-Null
+
+    foreach ($Package in $Packages) {
+        $PackageId = $Package.id
+        $PackageFileName = Get-ChildItem -Path $ChocolateyPackagesPath -Name $PackageId* | 
+            Select-Object -Last 1
+        Copy-Item -Path "$ChocolateyPackagesPath\$PackageFileName" -Destination "$ChocolateyRemoteSourcePath\$PackageFileName" -Force
+    }
+}
