@@ -300,7 +300,7 @@ adobereader
             )
         )
     )
-}
+},
 [PSCustomObject][Ordered] @{
     Name = "SCCM2016"
     ChocolateyPackageConfigPackages = @(
@@ -321,7 +321,7 @@ ubiquiti-unifi-controller
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         )
     )
-}
+},
 [PSCustomObject][Ordered] @{
     Name = "PrintServer"
     ChocolateyPackageConfigPackages = @(
@@ -481,4 +481,12 @@ nodejs
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         )
     )
+},
+[PSCustomObject][Ordered] @{
+    Name = "LocalPackageTest"
+    ChocolateyPackageConfigPackages = @(
+            (New-TervisChocolateyPackageConfigPackage -id CiscoAnyConnect -source "C:\ProgramData\Tervis\ChocolateyPackage"),
+            (New-TervisChocolateyPackageConfigPackage -id TervisTeamViewerHost -source "C:\ProgramData\Tervis\ChocolateyPackage"),
+            (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -source "C:\ProgramData\Tervis\ChocolateyPackage")
+        )
 }
