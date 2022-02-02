@@ -387,7 +387,6 @@ greenshot
     ChocolateyPackageConfigPackages = @(
         (
 @"
-CiscoAnyConnect
 googlechrome
 firefox
 autohotkey
