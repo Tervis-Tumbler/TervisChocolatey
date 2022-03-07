@@ -15,7 +15,7 @@ adobereader
             (New-TervisChocolateyPackageConfigPackage -id jre8 -version 8.0.191.20181114 -packageParameters "/exclude:64")
             (New-TervisChocolateyPackageConfigPackage -id CiscoAnyConnect -source "C:\ProgramData\Tervis\ChocolateyPackage"),
             (New-TervisChocolateyPackageConfigPackage -id TervisTeamViewerHost -source "C:\ProgramData\Tervis\ChocolateyPackage"),
-            (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -source "C:\ProgramData\Tervis\ChocolateyPackage")
+            (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -packageParameters "/64bit" -source "C:\ProgramData\Tervis\ChocolateyPackage")
         )
     )
 },
@@ -57,6 +57,10 @@ windirstat
 winmerge
 wireshark
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
+        ) + @(
+            (New-TervisChocolateyPackageConfigPackage -id jre8 -version 8.0.191.20181114 -packageParameters "/exclude:64"),
+            (New-TervisChocolateyPackageConfigPackage -id CiscoAnyConnect -source "C:\ProgramData\Tervis\ChocolateyPackage"),
+            (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -packageParameters "/64bit" -source "C:\ProgramData\Tervis\ChocolateyPackage")
         )
     )
 },
@@ -342,7 +346,7 @@ sql2012.nativeclient
         ) +
         @(
             (New-TervisChocolateyPackageConfigPackage -id jre8 -version 8.0.191.20181114 -packageParameters "/exclude:64"),
-            (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -packageParameters "/VolumeLicense" -source "C:\ProgramData\Tervis\ChocolateyPackage"),
+            (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -packageParameters "/VolumeLicense /64bit" -source "C:\ProgramData\Tervis\ChocolateyPackage"),
             (New-TervisChocolateyPackageConfigPackage -id TervisTeamViewerHost -source "C:\ProgramData\Tervis\ChocolateyPackage")
         )
     )
@@ -358,7 +362,7 @@ greenshot
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
         ) + @(
             (New-TervisChocolateyPackageConfigPackage -id jre8 -version 8.0.191.20181114 -packageParameters "/exclude:64"),
-            (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -packageParameters "/VolumeLicense" -source "C:\ProgramData\Tervis\ChocolateyPackage"),
+            (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -packageParameters "/VolumeLicense /64bit" -source "C:\ProgramData\Tervis\ChocolateyPackage"),
             (New-TervisChocolateyPackageConfigPackage -id TervisTeamViewerHost -source "C:\ProgramData\Tervis\ChocolateyPackage")
         )
     )
@@ -396,7 +400,7 @@ adobereader
             (New-TervisChocolateyPackageConfigPackage -id jre8 -version 8.0.191.20181114 -packageParameters "/exclude:64"),
             (New-TervisChocolateyPackageConfigPackage -id CiscoAnyConnect -source "C:\ProgramData\Tervis\ChocolateyPackage"),
             (New-TervisChocolateyPackageConfigPackage -id TervisTeamViewerHost -source "C:\ProgramData\Tervis\ChocolateyPackage"),
-            (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -packageParameters "/VolumeLicense" -source "C:\ProgramData\Tervis\ChocolateyPackage")
+            (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -packageParameters "/VolumeLicense /64bit"  -source "C:\ProgramData\Tervis\ChocolateyPackage")
 
         )
     )
