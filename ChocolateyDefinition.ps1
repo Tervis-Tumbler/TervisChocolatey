@@ -57,10 +57,6 @@ windirstat
 winmerge
 wireshark
 "@ -split "`r`n" | New-TervisChocolateyPackageConfigPackage
-        ) + @(
-            (New-TervisChocolateyPackageConfigPackage -id jre8 -version 8.0.191.20181114 -packageParameters "/exclude:64"),
-            (New-TervisChocolateyPackageConfigPackage -id CiscoAnyConnect -source "C:\ProgramData\Tervis\ChocolateyPackage"),
-            (New-TervisChocolateyPackageConfigPackage -id office365-deployment-tool -packageParameters "/64bit" -source "C:\ProgramData\Tervis\ChocolateyPackage")
         )
     )
 },
